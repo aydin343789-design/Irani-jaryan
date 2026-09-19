@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ایران آریایی — پیش‌نمایش</title>
+<!-- CDN فقط برای پیش‌نمایش — نسخه نهایی آفلاین -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/diff@5.1.0/dist/diff.min.js"></script>
+<style>
+:root{--bg:#F8F9FB;--card:#FFF;--card2:#F1F3F7;--pri:#0F4C81;--pri-s:rgba(15,76,129,.08);--sec:#E8B341;--txt:#1A1A1A;--txt2:#5A6472;--txt3:#8A94A3;--brd:#E5E8EE;--ok:#2E9E6B;--err:#D94A4A;--sh:0 2px 8px rgba(0,0,0,.04);--sh2:0 8px 24px rgba(0,0,0,.08);--r:16px;--r2:24px;--tr:250ms ease}
+[data-theme=dark]{--bg:#0E1117;--card:#1A1F2B;--card2:#232A38;--pri:#4A9EFF;--pri-s:rgba(74,158,255,.12);--txt:#EDEDED;--txt2:#A8B0BD;--txt3:#6B7484;--brd:#2A3140;--ok:#3BB87A;--err:#F06565;--sh:0 2px 8px rgba(0,0,0,.3);--sh2:0 8px 24px rgba(0,0,0,.4)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}
+body{font-family:Tahoma,'Segoe UI',sans-serif;background:var(--bg);color:var(--txt);direction:rtl;line-height:1.6;transition:background var(--tr),color var(--tr);padding-bottom:80px}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font-family:inherit}
+.hero{background:linear-gradient(135deg,var(--pri),#1a5e9c);color:#fff;padding:24px 20px 32px;border-radius:0 0 var(--r2) var(--r2);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-20%;width:140%;height:200%;background:radial-gradient(circle,rgba(232,179,65,.15),transparent 60%);pointer-events:none}
+.hero-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--sec));display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.brand h1{font-size:18px;font-weight:700}
+.brand-sub{font-size:12px;opacity:.8}
+.icon-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px}
+.hero-greeting{text-align:center;margin:28px 0 20px;position:relative;z-index:2}
+.hero-greeting h2{font-size:20px;display:flex;align-items:center;justify-content:center;gap:10px}
+.glow{width:10px;height:10px;border-radius:50%;background:var(--sec);animation:glow 2s infinite}
+@keyframes glow{0%{box-shadow:0 0 0 0 rgba(232,179,65,.7)}70%{box-shadow:0 0 0 14px rgba(232,179,65,0)}100%{box-shadow:0 0 0 0 rgba(232,179,65,0)}}
+.hero-status{font-size:13px;opacity:.85;margin-top:6px}
+.intent-box{display:flex;align-items:center;background:rgba(255,255,255,.95);border-radius:var(--r);padding:4px 4px 4px 16px;gap:8px;box-shadow:var(--sh2);position:relative;z-index:2}
+[data-theme=dark] .intent-box{background:rgba(26,31,43,.95)}
+.intent-box input{flex:1;border:none;outline:none;background:transparent;color:var(--txt);font-size:15px;padding:12px 4px;direction:rtl}
+.intent-send{width:42px;height:42px;border-radius:12px;background:var(--pri);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
+.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px;position:relative;z-index:2}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);padding:6px 12px;border-radius:100px;font-size:12px}
+.dot{width:6px;height:6px;border-radius:50%;background:#4ade80}
+.container{max-width:720px;margin:0 auto;padding:20px 16px}
+.page{display:none;animation:fadeIn .3s ease}.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.sec-title{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.sec-title h3{font-size:17px;font-weight:700}
+.sec-title span{font-size:12px;color:var(--txt3)}
+.quick-grid{display:grid;gap:10px;margin-bottom:24px}
+.quick-card{display:flex;align-items:center;gap:14px;background:var(--card);padding:16px;border-radius:var(--r);box-shadow:var(--sh);text-align:right;width:100%;transition:transform .2s}
+.quick-card:active{transform:scale(.98)}
+.qi{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.qt{flex:1}.qt strong{display:block;font-size:15px}.qt small{color:var(--txt3);font-size:12px}
+.chip-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;margin-bottom:14px;scrollbar-width:none}
+.chip-scroll::-webkit-scrollbar{display:none}
+.chip{padding:8px 16px;border-radius:100px;background:var(--card);border:1px solid var(--brd);font-size:13px;white-space:nowrap;color:var(--txt2);transition:all .2s}
+.chip.active{background:var(--pri);color:#fff;border-color:var(--pri)}
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tc{background:var(--card);border-radius:var(--r);padding:16px;text-align:right;box-shadow:var(--sh);transition:all .2s;border:1px solid transparent}
+.tc:active{transform:scale(.97);border-color:var(--pri)}
+.tc-icon{width:40px;height:40px;border-radius:10px;background:var(--pri-s);display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:20px}
+.tc-name{font-size:14px;font-weight:600;margin-bottom:4px}
+.tc-cat{font-size:11px;color:var(--txt3);margin-bottom:8px}
+.tc-st{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--ok);background:rgba(46,158,107,.1);padding:3px 8px;border-radius:100px}
+.tc-st::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--ok)}
+.tc-st.native{color:var(--sec);background:rgba(232,179,65,.1)}
+.tc-st.native::before{background:var(--sec)}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.stat-card{background:var(--card);padding:16px;border-radius:var(--r);text-align:center;box-shadow:var(--sh)}
+.stat-num{font-size:28px;font-weight:700;color:var(--pri)}
+.stat-label{font-size:12px;color:var(--txt3);margin-top:4px}
+.privacy-banner{display:flex;gap:12px;background:var(--pri-s);border:1px solid var(--brd);padding:14px;border-radius:var(--r);margin-bottom:16px}
+.activity-list{background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+.act-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--brd)}
+.act-icon{width:36px;height:36px;border-radius:10px;background:var(--pri-s);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.act-info{flex:1;min-width:0}.act-info strong{display:block;font-size:13px}.act-info small{color:var(--txt3);font-size:11px}
+.empty{text-align:center;padding:40px 20px;color:var(--txt3)}
+.settings-group{background:var(--card);border-radius:var(--r);padding:16px;margin-bottom:14px;box-shadow:var(--sh)}
+.settings-group h4{font-size:13px;color:var(--txt3);margin-bottom:12px}
+.si{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--brd)}
+.si:last-child{border:none}
+.si strong{font-size:14px;display:block}.si p{font-size:12px;color:var(--txt3);margin:2px 0 0}
+.switch{position:relative;width:44px;height:26px;flex-shrink:0}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--brd);border-radius:100px;transition:var(--tr);cursor:pointer}
+.slider::before{content:'';position:absolute;width:20px;height:20px;right:3px;top:3px;background:#fff;border-radius:50%;transition:var(--tr);box-shadow:0 2px 4px rgba(0,0,0,.2)}
+.switch input:checked+.slider{background:var(--pri)}
+.switch input:checked+.slider::before{transform:translateX(-18px)}
+.status-on{font-size:12px;color:var(--ok);background:rgba(46,158,107,.1);padding:4px 10px;border-radius:100px}
+.s-btn{display:flex;align-items:center;gap:10px;width:100%;padding:12px;border-radius:12px;background:var(--card2);margin-bottom:8px;font-size:14px}
+.s-btn.danger{color:var(--err)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--brd);display:flex;justify-content:space-around;padding:8px 0 calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(0,0,0,.04);z-index:100}
+.nb{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 16px;color:var(--txt3);font-size:20px;border-radius:10px}
+.nb.active{color:var(--pri)}.nb span{font-size:11px}
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.backdrop.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-radius:var(--r2) var(--r2) 0 0;max-height:92vh;transform:translateY(100%);transition:transform .3s cubic-bezier(.32,.72,0,1);z-index:201;display:flex;flex-direction:column;box-shadow:0 16px 48px rgba(0,0,0,.14)}
+.sheet.open{transform:translateY(0)}
+.sheet-handle{width:40px;height:4px;background:var(--brd);border-radius:100px;margin:10px auto 0}
+.sheet-hdr{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 12px;border-bottom:1px solid var(--brd)}
+.sheet-brand{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--pri)}
+.sheet-close{width:32px;height:32px;border-radius:50%;background:var(--card2);font-size:20px;display:flex;align-items:center;justify-content:center}
+.sheet-body{padding:16px 20px 24px;overflow-y:auto;flex:1}
+.tt{font-size:18px;font-weight:700;margin-bottom:4px}
+.td{font-size:13px;color:var(--txt2);margin-bottom:16px;line-height:1.7}
+.ts{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--ok);margin-bottom:16px}
+.ts::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--ok);animation:glow 2s infinite}
+.fp{display:flex;align-items:center;justify-content:center;gap:10px;padding:24px 16px;border:2px dashed var(--brd);border-radius:var(--r);background:var(--card2);color:var(--txt2);cursor:pointer;font-size:14px;text-align:center}
+.fp:active{border-color:var(--pri)}.fp.has{border-style:solid;border-color:var(--ok);color:var(--ok)}
+.pv{margin-top:12px;border-radius:var(--r);overflow:hidden;background:var(--card2);display:none}
+.pv.show{display:block}.pv img{width:100%;display:block;max-height:280px;object-fit:contain}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+.field input[type=text],.field input[type=number],.field textarea,.field select{width:100%;padding:10px 12px;border:1px solid var(--brd);border-radius:12px;background:var(--card2);color:var(--txt);font-size:14px;outline:none}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pri)}
+.field textarea{min-height:100px;resize:vertical}
+.rw{display:flex;align-items:center;gap:10px}
+.rw input[type=range]{flex:1;accent-color:var(--pri)}
+.rw .rv{min-width:44px;text-align:center;font-weight:600;color:var(--pri)}
+.cr{display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px}
+.cr input{accent-color:var(--pri)}
+.bp{width:100%;padding:14px;background:var(--pri);color:#fff;border-radius:14px;font-size:15px;font-weight:600;margin-top:16px;box-shadow:0 4px 12px rgba(15,76,129,.25)}
+.bp:active{transform:scale(.98)}.bp:disabled{opacity:.5}
+.rb{margin-top:16px;padding:14px;background:var(--card2);border-radius:var(--r);display:none}
+.rb.show{display:block;animation:fadeIn .3s ease}
+.rb h5{font-size:13px;color:var(--txt3);margin-bottom:8px}
+.rc{font-size:14px;word-break:break-word;line-height:1.7}
+.rc pre{background:var(--bg);padding:10px;border-radius:10px;overflow-x:auto;font-size:12px;direction:ltr;text-align:left}
+.ra{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.rb-btn{padding:10px;background:var(--card);border:1px solid var(--brd);border-radius:12px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--txt2)}
+.rb-btn:active{background:var(--pri-s);color:var(--pri)}
+.toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--txt);color:var(--bg);padding:10px 18px;border-radius:100px;font-size:13px;opacity:0;pointer-events:none;transition:all .3s;z-index:300;max-width:80%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.hidden{display:none!important}.mt{margin-top:12px}.tm{color:var(--txt3)}
+@media(min-width:600px){.tools-grid{grid-template-columns:repeat(3,1fr)}.quick-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="hero-top">
+<div class="brand"><div class="brand-logo">آ</div><div><h1>ایران آریایی</h1><span class="brand-sub">دستیار محلی شما</span></div></div>
+<button class="icon-btn" id="themeBtn">🌙</button>
+</div>
+<div class="hero-greeting">
+<h2><div class="glow"></div>چه کاری براتون انجام بدم؟</h2>
+<p class="hero-status">دستیار محلی آماده است</p>
+</div>
+<form class="intent-box" id="intentForm" autocomplete="off">
+<input type="text" id="intentInput" placeholder="مثلاً: حجم عکس را کم کن، QR بساز، فال حافظ...">
+<button type="submit" class="intent-send">➤</button>
+</form>
+<div class="badges">
+<span class="badge"><span class="dot"></span>بدون اینترنت</span>
+<span class="badge"><span class="dot"></span>بدون آپلود</span>
+<span class="badge"><span class="dot"></span>پردازش روی گوشی</span>
+</div>
+</header>
+<main class="container">
+<section class="page active" id="pg-home">
+<div class="sec-title"><h3>دسترسی سریع</h3></div>
+<div class="quick-grid">
+<button class="quick-card" data-t="compress-image"><div class="qi" style="background:#0F4C81;color:#fff">🗜️</div><div class="qt"><strong>کاهش حجم عکس</strong><small>فشرده‌سازی هوشمند</small></div></button>
+<button class="quick-card" data-t="qr-generate"><div class="qi" style="background:#E8B341;color:#fff">📱</div><div class="qt"><strong>ساخت QR کد</strong><small>از متن یا لینک</small></div></button>
+<button class="quick-card" data-t="image-to-pdf"><div class="qi" style="background:#B34141;color:#fff">📄</div><div class="qt"><strong>عکس به PDF</strong><small>یک یا چند عکس</small></div></button>
+</div>
+<div class="sec-title"><h3>فضای کاری</h3><span>۳۳ ابزار</span></div>
+<div class="chip-scroll" id="chips"></div>
+<div class="tools-grid" id="grid"></div>
+</section>
+<section class="page" id="pg-activity">
+<div class="sec-title"><h3>تاریخچه</h3><span id="actCnt">۰ عملیات</span></div>
+<div class="privacy-banner"><div style="font-size:24px">🔒</div><div><strong>حریم خصوصی کامل</strong><p>تمام پردازش‌ها روی دستگاه شما. هیچ فایلی به سرور ارسال نمی‌شود.</p></div></div>
+<div class="stats-row"><div class="stat-card"><div class="stat-num" id="sTotal">0</div><div class="stat-label">کل عملیات</div></div><div class="stat-card"><div class="stat-num">۰</div><div class="stat-label">ارسال به سرور</div></div></div>
+<div class="activity-list" id="actList"><div class="empty">📋<br>هنوز فعالیتی ثبت نشده</div></div>
+</section>
+<section class="page" id="pg-settings">
+<div class="sec-title"><h3>تنظیمات</h3><span>نسخه ۱.۰</span></div>
+<div class="settings-group"><h4>ظاهر</h4>
+<div class="si"><div><strong>حالت شب</strong><p>تم تاریک</p></div><label class="switch"><input type="checkbox" id="darkSw"><span class="slider"></span></label></div>
+</div>
+<div class="settings-group"><h4>حریم خصوصی</h4>
+<div class="si"><div><strong>پردازش محلی</strong></div><span class="status-on">فعال</span></div>
+<div class="si"><div><strong>حالت آفلاین</strong></div><span class="status-on">فعال</span></div>
+</div>
+<div class="settings-group"><h4>داده‌ها</h4>
+<button class="s-btn danger" id="clrHist">🗑️ حذف تاریخچه</button>
+<button class="s-btn danger" id="clrNotes">📝 حذف یادداشت‌ها</button>
+</div>
+<div class="settings-group"><h4>درباره</h4><div style="text-align:center;padding:12px"><div style="font-size:40px;margin-bottom:8px">🇮🇷</div><h5>ایران آریایی</h5><p class="tm">مجموعه ابزارهای آفلاین فارسی</p><p class="tm" style="font-size:12px">نسخه ۱.۰ — ۱۴۰۵</p></div></div>
+</section>
+</main>
+<nav class="bottom-nav">
+<button class="nb active" data-p="home">🏠<span>خانه</span></button>
+<button class="nb" data-p="activity">🕐<span>فعالیت</span></button>
+<button class="nb" data-p="settings">⚙️<span>تنظیمات</span></button>
+</nav>
+<div class="backdrop" id="backdrop"></div>
+<div class="sheet" id="sheet"><div class="sheet-handle"></div>
+<div class="sheet-hdr"><div class="sheet-brand">🇮🇷 SMART TOOL</div><button class="sheet-close" id="sheetX">×</button></div>
+<div class="sheet-body" id="sheetBody"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   ایران آریایی — ۲۵ ابزار JS واقعی
+   ═══════════════════════════════════════════════════ */
+const TOOLS=[
+{id:'compress-image',n:'کاهش حجم عکس',c:'image',i:'🗜️'},
+{id:'convert-image',n:'مبدل تصویر',c:'image',i:'🔄'},
+{id:'crop-image',n:'برش عکس',c:'image',i:'✂️'},
+{id:'edit-image',n:'ویرایش تصویر',c:'image',i:'🎨'},
+{id:'text-on-image',n:'عکس‌نوشته',c:'image',i:'🔤'},
+{id:'svg-to-image',n:'SVG به عکس',c:'image',i:'🖼️'},
+{id:'favicon',n:'ساخت فاوآیکون',c:'image',i:'⭐'},
+{id:'remove-bg',n:'حذف پس‌زمینه',c:'image',i:'🪄',nat:1},
+{id:'to-heic',n:'تبدیل به HEIC',c:'image',i:'📱',nat:1},
+{id:'from-heic',n:'HEIC به JPG',c:'image',i:'🖼️',nat:1},
+{id:'qr-generate',n:'ساخت QR کد',c:'qr',i:'📱'},
+{id:'qr-scan',n:'اسکن QR کد',c:'qr',i:'📷'},
+{id:'image-to-pdf',n:'عکس به PDF',c:'pdf',i:'📄'},
+{id:'merge-pdf',n:'ادغام PDF',c:'pdf',i:'📚'},
+{id:'text-to-pdf',n:'پی‌دی‌اف ساز',c:'pdf',i:'📝'},
+{id:'pdf-to-image',n:'PDF به عکس',c:'pdf',i:'🖼️',nat:1},
+{id:'text-analyzer',n:'تحلیلگر متن',c:'text',i:'🔍'},
+{id:'text-diff',n:'مقایسه متن',c:'text',i:'⇄'},
+{id:'meta-tags',n:'تولید متا تگ',c:'text',i:'🏷️'},
+{id:'notes',n:'دفترچه یادداشت',c:'text',i:'📓'},
+{id:'code-formatter',n:'فرمت‌دهی کد',c:'code',i:'{ }'},
+{id:'regex-test',n:'تست ریجکس',c:'code',i:'.*'},
+{id:'password',n:'تولید رمز عبور',c:'code',i:'🔐'},
+{id:'calendar',n:'تقویم شمسی',c:'date',i:'📅'},
+{id:'date-convert',n:'تبدیل تاریخ',c:'date',i:'🔄'},
+{id:'age-calc',n:'محاسبه سن',c:'date',i:'🎂'},
+{id:'city-dist',n:'فاصله شهرها',c:'utils',i:'🗺️'},
+{id:'dictionary',n:'دیکشنری',c:'utils',i:'📖'},
+{id:'hafez',n:'فال حافظ',c:'utils',i:'📜'},
+{id:'audio-cut',n:'برش آهنگ',c:'audio',i:'🎵',nat:1},
+{id:'audio-compress',n:'کاهش حجم صوت',c:'audio',i:'🔉',nat:1},
+{id:'audio-mp3',n:'تبدیل به MP3',c:'audio',i:'🎧',nat:1},
+{id:'video-compress',n:'کاهش حجم ویدئو',c:'video',i:'🎬',nat:1}
+];
+const CATS={all:'همه',image:'تصویر',pdf:'PDF',qr:'QR',text:'متن',code:'کد',date:'تاریخ',utils:'ابزار',audio:'صوت',video:'ویدئو'};
+const CITIES=[
+{n:"تهران",la:35.689,lo:51.389},{n:"مشهد",la:36.261,lo:59.617},{n:"اصفهان",la:32.655,lo:51.668},
+{n:"شیراز",la:29.592,lo:52.584},{n:"تبریز",la:38.080,lo:46.292},{n:"کرج",la:35.836,lo:50.995},
+{n:"قم",la:34.640,lo:50.876},{n:"اهواز",la:31.318,lo:48.671},{n:"رشت",la:37.281,lo:49.583},
+{n:"کرمان",la:30.284,lo:57.083},{n:"همدان",la:34.799,lo:48.515},{n:"ارومیه",la:37.553,lo:45.076},
+{n:"یزد",la:31.897,lo:54.357},{n:"کرمانشاه",la:34.327,lo:47.076},{n:"اردبیل",la:38.250,lo:48.293},
+{n:"بندرعباس",la:27.183,lo:56.267},{n:"اراک",la:34.095,lo:49.701},{n:"زنجان",la:36.674,lo:48.479},
+{n:"سنندج",la:35.322,lo:46.986},{n:"قزوین",la:36.269,lo:50.004},{n:"خرم‌آباد",la:33.456,lo:48.346},
+{n:"سمنان",la:35.581,lo:53.388},{n:"بیرجند",la:32.865,lo:59.226},{n:"گرگان",la:36.834,lo:54.437},
+{n:"ساری",la:36.563,lo:53.060},{n:"بجنورد",la:37.475,lo:57.329},{n:"بوشهر",la:28.923,lo:50.820},
+{n:"ایلام",la:33.634,lo:46.426},{n:"شهرکرد",la:32.324,lo:50.862},{n:"یاسوج",la:30.668,lo:51.588},
+{n:"زاهدان",la:29.496,lo:60.863},{n:"کاشان",la:33.985,lo:51.439},{n:"آبادان",la:30.339,lo:48.304},
+{n:"دزفول",la:32.383,lo:48.424},{n:"نیشابور",la:36.211,lo:58.796},{n:"سبزوار",la:36.213,lo:57.667},
+{n:"آمل",la:36.469,lo:52.349},{n:"بابل",la:36.549,lo:52.679},{n:"قائم‌شهر",la:36.469,lo:52.869},
+{n:"نوشهر",la:36.649,lo:51.499},{n:"چالوس",la:36.649,lo:51.419},{n:"رامسر",la:36.909,lo:50.659},
+{n:"تنکابن",la:36.819,lo:50.879},{n:"بهشهر",la:36.699,lo:52.549},{n:"مرند",la:38.425,lo:45.769},
+{n:"مراغه",la:37.389,lo:46.237},{n:"خوی",la:38.550,lo:44.952},{n:"مهاباد",la:36.759,lo:45.721},
+{n:"سقز",la:36.246,lo:46.267},{n:"بانه",la:35.998,lo:45.884}
+];
+const DICT=[
+{e:"hello",f:"سلام"},{e:"goodbye",f:"خداحافظ"},{e:"please",f:"لطفاً"},{e:"thank you",f:"متشکرم"},
+{e:"yes",f:"بله"},{e:"no",f:"نه"},{e:"water",f:"آب"},{e:"fire",f:"آتش"},{e:"earth",f:"زمین"},
+{e:"sky",f:"آسمان"},{e:"sun",f:"خورشید"},{e:"moon",f:"ماه"},{e:"star",f:"ستاره"},{e:"cloud",f:"ابر"},
+{e:"rain",f:"باران"},{e:"snow",f:"برف"},{e:"wind",f:"باد"},{e:"sea",f:"دریا"},{e:"river",f:"رودخانه"},
+{e:"mountain",f:"کوه"},{e:"tree",f:"درخت"},{e:"flower",f:"گل"},{e:"garden",f:"باغ"},{e:"forest",f:"جنگل"},
+{e:"desert",f:"بیابان"},{e:"animal",f:"حیوان"},{e:"bird",f:"پرنده"},{e:"fish",f:"ماهی"},{e:"cat",f:"گربه"},
+{e:"dog",f:"سگ"},{e:"horse",f:"اسب"},{e:"lion",f:"شیر"},{e:"tiger",f:"ببر"},{e:"bear",f:"خرس"},
+{e:"wolf",f:"گرگ"},{e:"rabbit",f:"خرگوش"},{e:"cow",f:"گاو"},{e:"sheep",f:"گوسفند"},{e:"camel",f:"شتر"},
+{e:"man",f:"مرد"},{e:"woman",f:"زن"},{e:"child",f:"کودک"},{e:"boy",f:"پسر"},{e:"girl",f:"دختر"},
+{e:"father",f:"پدر"},{e:"mother",f:"مادر"},{e:"brother",f:"برادر"},{e:"sister",f:"خواهر"},
+{e:"family",f:"خانواده"},{e:"friend",f:"دوست"},{e:"house",f:"خانه"},{e:"door",f:"در"},
+{e:"window",f:"پنجره"},{e:"room",f:"اتاق"},{e:"kitchen",f:"آشپزخانه"},{e:"bed",f:"تخت"},
+{e:"book",f:"کتاب"},{e:"pen",f:"قلم"},{e:"paper",f:"کاغذ"},{e:"school",f:"مدرسه"},
+{e:"teacher",f:"معلم"},{e:"student",f:"دانش‌آموز"},{e:"university",f:"دانشگاه"},{e:"work",f:"کار"},
+{e:"money",f:"پول"},{e:"market",f:"بازار"},{e:"food",f:"غذا"},{e:"bread",f:"نان"},{e:"rice",f:"برنج"},
+{e:"meat",f:"گوشت"},{e:"fruit",f:"میوه"},{e:"apple",f:"سیب"},{e:"orange",f:"پرتقال"},{e:"tea",f:"چای"},
+{e:"coffee",f:"قهوه"},{e:"milk",f:"شیر"},{e:"sugar",f:"شکر"},{e:"salt",f:"نمک"},{e:"time",f:"زمان"},
+{e:"day",f:"روز"},{e:"night",f:"شب"},{e:"morning",f:"صبح"},{e:"week",f:"هفته"},{e:"month",f:"ماه"},
+{e:"year",f:"سال"},{e:"today",f:"امروز"},{e:"tomorrow",f:"فردا"},{e:"yesterday",f:"دیروز"},
+{e:"city",f:"شهر"},{e:"country",f:"کشور"},{e:"world",f:"جهان"},{e:"road",f:"جاده"},{e:"car",f:"ماشین"},
+{e:"phone",f:"تلفن"},{e:"computer",f:"رایانه"},{e:"internet",f:"اینترنت"},{e:"color",f:"رنگ"},
+{e:"red",f:"قرمز"},{e:"blue",f:"آبی"},{e:"green",f:"سبز"},{e:"black",f:"سیاه"},{e:"white",f:"سفید"},
+{e:"big",f:"بزرگ"},{e:"small",f:"کوچک"},{e:"good",f:"خوب"},{e:"bad",f:"بد"},{e:"beautiful",f:"زیبا"},
+{e:"happy",f:"خوشحال"},{e:"sad",f:"غمگین"},{e:"love",f:"عشق"},{e:"heart",f:"قلب"},{e:"life",f:"زندگی"},
+{e:"death",f:"مرگ"},{e:"hope",f:"امید"},{e:"dream",f:"رویا"},{e:"peace",f:"صلح"},{e:"war",f:"جنگ"},
+{e:"eat",f:"خوردن"},{e:"drink",f:"نوشیدن"},{e:"sleep",f:"خوابیدن"},{e:"go",f:"رفتن"},{e:"come",f:"آمدن"},
+{e:"see",f:"دیدن"},{e:"hear",f:"شنیدن"},{e:"speak",f:"صحبت کردن"},{e:"read",f:"خواندن"},
+{e:"write",f:"نوشتن"},{e:"learn",f:"یاد گرفتن"},{e:"think",f:"فکر کردن"},{e:"know",f:"دانستن"},
+{e:"want",f:"خواستن"},{e:"give",f:"دادن"},{e:"take",f:"گرفتن"},{e:"buy",f:"خریدن"},{e:"sell",f:"فروختن"},
+{e:"make",f:"ساختن"},{e:"help",f:"کمک کردن"},{e:"play",f:"بازی کردن"},{e:"spring",f:"بهار"},
+{e:"summer",f:"تابستان"},{e:"autumn",f:"پاییز"},{e:"winter",f:"زمستان"},{e:"iran",f:"ایران"},
+{e:"language",f:"زبان"},{e:"science",f:"علم"},{e:"art",f:"هنر"},{e:"history",f:"تاریخ"},
+{e:"doctor",f:"پزشک"},{e:"hospital",f:"بیمارستان"},{e:"king",f:"پادشاه"},{e:"god",f:"خدا"},
+{e:"prayer",f:"نماز"},{e:"mosque",f:"مسجد"},{e:"gold",f:"طلا"},{e:"silver",f:"نقره"},
+{e:"iron",f:"آهن"},{e:"wood",f:"چوب"},{e:"stone",f:"سنگ"},{e:"glass",f:"شیشه"}
+];
+const GHAZALS=[
+{n:1,t:"الا یا ایّها الساقی ادر کأساً و ناولها\nکه عشق آسان نمود اول ولی افتاد مشکل‌ها",m:"دعوت به نوش باده عشق و بیان دشواری‌های راه."},
+{n:2,t:"اگر آن ترک شیرازی به دست آرد دل ما را\nبه خال هندویش بخشم سمرقند و بخارا را",m:"اوج عشق و فدا کردن جهان برای معشوق."},
+{n:3,t:"مژده ای دل که دگر باد صبا بازآمد\nهدهد خوش خبر از گلستان آمد",m:"بشارت بهار و بازگشت امید."},
+{n:4,t:"زلف آشفته و خوی کرده و خندان لب و مست\nپیرهن دریده و غزل‌خوان و جام در دست",m:"توصیف زیبایی معشوق."},
+{n:5,t:"رسید مژده که ایام غم نخواهد ماند\nچنان که من نماندم ای دوست تو نیز مروار",m:"امید به پایان غم‌ها."},
+{n:6,t:"ساقی به نور باده برافروز جام ما\nمطرب بگو که کار جهان شد به کام ما",m:"شادی و امید."},
+{n:7,t:"دوش وقت سحر از غصه نجاتم دادند\nواندر آن ظلمت شب آب حیاتم دادند",m:"نجات از غم در تاریکی."},
+{n:8,t:"ساقیا کز مهر رخسار تو مستم می‌ده\nکه دگر باره به هوش آیم و دستم می‌ده",m:"درخواست ادامه مستی عشق."},
+{n:9,t:"صبح است ساقیا قدحی پر شراب کن\nوان غم که در دلم نشیند به آب کن",m:"دعوت به شادی."},
+{n:10,t:"حافظا شیرازهٔ شعر تو پاره پاره شد\nچند پراکنده نویسی چو عنکبوت تار",m:"گلایه از پراکندگی."}
+];
+const INTENTS=[
+{k:['حجم عکس','فشرده','کم کردن حجم','حجم تصویر'],t:'compress-image'},
+{k:['تبدیل عکس','تبدیل فرمت','jpg','png','webp'],t:'convert-image'},
+{k:['برش عکس','برش تصویر','کراپ','crop'],t:'crop-image'},
+{k:['ویرایش','چرخش','آینه','فیلتر'],t:'edit-image'},
+{k:['عکس نوشته','متن روی عکس','نوشته'],t:'text-on-image'},
+{k:['svg','اس وی جی'],t:'svg-to-image'},
+{k:['فاوآیکون','favicon','آیکون سایت'],t:'favicon'},
+{k:['qr','کیو آر','بارکد','qr code'],t:'qr-generate'},
+{k:['اسکن qr','خواندن qr'],t:'qr-scan'},
+{k:['عکس به pdf','pdf از عکس','پی دی اف'],t:'image-to-pdf'},
+{k:['ادغام pdf','ترکیب pdf'],t:'merge-pdf'},
+{k:['متن به pdf','ساخت pdf','pdf ساز'],t:'text-to-pdf'},
+{k:['تحلیل متن','شمارش کلمات','تعداد کلمات'],t:'text-analyzer'},
+{k:['مقایسه متن','تفاوت','diff'],t:'text-diff'},
+{k:['متا تگ','meta','سئو'],t:'meta-tags'},
+{k:['یادداشت','دفترچه','note'],t:'notes'},
+{k:['فرمت کد','کد','json','javascript'],t:'code-formatter'},
+{k:['ریجکس','regex','الگو'],t:'regex-test'},
+{k:['رمز','رمز عبور','پسورد','password'],t:'password'},
+{k:['تقویم','تقویم شمسی','امروز'],t:'calendar'},
+{k:['تبدیل تاریخ','شمسی به میلادی','میلادی به شمسی'],t:'date-convert'},
+{k:['سن','محاسبه سن','چند سالمه'],t:'age-calc'},
+{k:['فاصله','فاصله شهر','مسافت'],t:'city-dist'},
+{k:['دیکشنری','ترجمه','معنی','dictionary'],t:'dictionary'},
+{k:['فال','حافظ','فال حافظ'],t:'hafez'}
+];
+
+/* ─── State ─── */
+const S={theme:'light',cat:'all',act:JSON.parse(localStorage.getItem('ia_act')||'[]')};
+const $=s=>document.querySelector(s);
+const $$=s=>document.querySelectorAll(s);
+function fa(n){return String(n).replace(/\d/g,d=>'۰۱۲۳۴۵۶۷۸۹'[d])}
+function toast(m,d=2200){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),d)}
+function fb(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(2)+' MB'}
+function f2d(f){return new Promise((r,j)=>{const x=new FileReader();x.onload=()=>r(x.result);x.onerror=j;x.readAsDataURL(f)})}
+function li(s){return new Promise((r,j)=>{const i=new Image();i.onload=()=>r(i);i.onerror=j;i.src=s})}
+function dl(b,n){const u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=n;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove()},1e3)}
+function sh(b,n){if(navigator.canShare&&navigator.canShare({files:[new File([b],n)]})){navigator.share({files:[new File([b],n)]}).catch(()=>dl(b,n));return}dl(b,n);toast('ذخیره شد')}
+function log(t,f='—'){S.act.unshift({t,f,ts:Date.now()});if(S.act.length>100)S.act.length=100;localStorage.setItem('ia_act',JSON.stringify(S.act));renderAct()}
+
+/* ─── Theme ─── */
+function setTheme(t){S.theme=t;document.documentElement.setAttribute('data-theme',t);localStorage.setItem('ia_theme',t);$('#darkSw').checked=t==='dark';$('#themeBtn').textContent=t==='dark'?'☀️':'🌙'}
+
+/* ─── Render ─── */
+function renderChips(){$('#chips').innerHTML=Object.entries(CATS).map(([k,v])=>`<button class="chip${S.cat===k?' active':''}" data-c="${k}">${v}</button>`).join('');$$('.chip').forEach(c=>c.onclick=()=>{S.cat=c.dataset.c;renderChips();renderGrid()})}
+function renderGrid(){const g=$('#grid'),ls=S.cat==='all'?TOOLS:TOOLS.filter(t=>t.c===S.cat);g.innerHTML=ls.map(t=>`<button class="tc" data-t="${t.id}"><div class="tc-icon">${t.i}</div><div class="tc-name">${t.n}</div><div class="tc-cat">${CATS[t.c]}</div><div class="tc-st${t.nat?' native':''}">${t.nat?'نیاز به اندروید':'آماده'}</div></button>`).join('');g.querySelectorAll('.tc').forEach(c=>c.onclick=()=>openTool(c.dataset.t))}
+function renderAct(){$('#sTotal').textContent=fa(S.act.length);$('#actCnt').textContent=fa(S.act.length)+' عملیات';const l=$('#actList');if(!S.act.length){l.innerHTML='<div class="empty">📋<br>هنوز فعالیتی ثبت نشده</div>';return}l.innerHTML=S.act.slice(0,30).map(a=>{const t=TOOLS.find(x=>x.id===a.t)||{i:'🛠️',n:a.t};const d=new Date(a.ts);return`<div class="act-item"><div class="act-icon">${t.i}</div><div class="act-info"><strong>${t.n}</strong><small>${a.f} • ${fa(d.getHours())}:${fa(String(d.getMinutes()).padStart(2,'0'))}</small></div></div>`}).join('')}
+
+/* ─── Navigation ─── */
+$$('.nb').forEach(b=>b.onclick=()=>{$$('.nb').forEach(x=>x.classList.remove('active'));b.classList.add('active');$$('.page').forEach(p=>p.classList.remove('active'));$('#pg-'+b.dataset.p).classList.add('active');scrollTo(0,0)});
+$$('.quick-card').forEach(c=>c.onclick=()=>openTool(c.dataset.t));
+
+/* ─── Sheet ─── */
+function openSheet(h){$('#sheetBody').innerHTML=h;$('#sheet').classList.add('open');$('#backdrop').classList.add('open');document.body.style.overflow='hidden'}
+function closeSheet(){$('#sheet').classList.remove('open');$('#backdrop').classList.remove('open');document.body.style.overflow=''}
+$('#sheetX').onclick=closeSheet;$('#backdrop').onclick=closeSheet;
+
+/* ─── Intent ─── */
+$('#intentForm').onsubmit=e=>{e.preventDefault();const q=$('#intentInput').value.trim().toLowerCase();if(!q)return;let best=null,bs=0;for(const i of INTENTS)for(const k of i.k)if(q.includes(k)&&k.length>bs){bs=k.length;best=i.t}if(best){openTool(best);$('#intentInput').value=''}else toast('متوجه نشدم')};
+
+/* ─── Helpers ─── */
+function shell(t,inner){return`<div class="tt">${t.i} ${t.n}</div><div class="ts">● آماده پردازش روی گوشی</div><div class="td">✦ کاملاً آفلاین — بدون ارسال به سرور</div>${inner}`}
+function resBox(id='r'){return`<div class="rb" id="${id}"><h5>نتیجه</h5><div class="rc" id="${id}c"></div><div class="ra"><button class="rb-btn" data-a="save">💾<br>ذخیره</button><button class="rb-btn" data-a="share">📤<br>اشتراک</button><button class="rb-btn" data-a="redo">🔁<br>تکرار</button></div></div>`}
+function bindR(el){el.querySelectorAll('.rb-btn').forEach(b=>b.onclick=()=>{const a=b.dataset.a;if(a==='save'&&el._b)dl(el._b,el._n||'out');else if(a==='share'&&el._b)sh(el._b,el._n||'out');else if(a==='redo')toast('دکمه اجرا را بزنید');else if(!el._b)toast('چیزی نیست')})}
+function onFile(fid,pid,cb,accept='image/*',multi=false){const f=$(fid),p=$(pid);function h(){const files=Array.from(f.files);if(!files.length)return;cb(files);p.classList.add('has');p.innerHTML=`✅ ${files.length>1?fa(files.length)+' فایل':files[0].name}<input type="file" accept="${accept}" ${multi?'multiple':''} id="${fid.slice(1)}" hidden>`;$(fid).onchange=h}f.onchange=h}
+
+/* ─── Open Tool ─── */
+function openTool(id){const t=TOOLS.find(x=>x.id===id);if(!t)return;if(t.nat){openSheet(`<div class="tt">${t.i} ${t.n}</div><div class="ts" style="color:var(--sec)">● نیاز به اندروید</div><div class="td">این ابزار در نسخه ۱.۱ با پلاگین Native فعال می‌شود.</div><div class="rb show"><h5>وضعیت</h5><div class="rc">🚧 در حال توسعه</div></div>`);return}const r=TR[id];if(r){openSheet(r(t));const ini=TI[id];if(ini)setTimeout(ini,50)}else openSheet(`<div class="tt">${t.i} ${t.n}</div><div class="rb show"><div class="rc">🚧 به‌زودی</div></div>`)}
+
+/* ═══════════════════════════════════════════════════
+   ۲۵ ابزار واقعی
+   ═══════════════════════════════════════════════════ */
+const TR={},TI={};
+
+/* ۱. کاهش حجم عکس */
+TR['compress-image']=t=>shell(t,`<label class="fp" id="p1">📁 انتخاب عکس<input type="file" accept="image/*" id="f1" hidden></label><div class="pv" id="v1"><img id="i1"></div><div class="field mt"><label>کیفیت: <span id="q1v">75</span>%</label><div class="rw"><input type="range" min="10" max="100" value="75" id="q1"></div></div><div class="field"><label>فرمت</label><select id="m1"><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option><option value="image/png">PNG</option></select></div><button class="bp" id="b1" disabled>اجرای عملیات</button>${resBox('x1')}`);
+TI['compress-image']=()=>{const q=$('#q1'),qv=$('#q1v'),m=$('#m1'),b=$('#b1'),r=$('#x1'),rc=$('#x1c');let orig=0,fo=null;q.oninput=()=>qv.textContent=q.value;onFile('#f1','#p1',async fs=>{fo=fs[0];orig=fo.size;$('#i1').src=await f2d(fo);$('#v1').classList.add('show');b.disabled=false});b.onclick=()=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width;c.height=img.height;c.getContext('2d').drawImage(img,0,0);c.toBlob(bl=>{const pct=((1-bl.size/orig)*100).toFixed(1);rc.innerHTML=`<div>📉 اصلی: <b>${fb(orig)}</b></div><div>📦 جدید: <b>${fb(bl.size)}</b></div><div>✨ کاهش: <b style="color:var(--ok)">${fa(pct)}%</b></div><img src="${URL.createObjectURL(bl)}" style="margin-top:10px;max-width:100%;border-radius:10px">`;r.classList.add('show');r._b=bl;r._n='compressed-'+(fo.name||'img.jpg');log('compress-image',fo.name);bindR(r)},m.value,q.value/100)};img.src=$('#i1').src}};
+
+/* ۲. مبدل تصویر */
+TR['convert-image']=t=>shell(t,`<label class="fp" id="p2">📁 انتخاب عکس<input type="file" accept="image/*" id="f2" hidden></label><div class="pv" id="v2"><img id="i2"></div><div class="field mt"><label>فرمت</label><select id="m2"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></div><button class="bp" id="b2" disabled>اجرا</button>${resBox('x2')}`);
+TI['convert-image']=()=>{const m=$('#m2'),b=$('#b2'),r=$('#x2'),rc=$('#x2c');let fo=null;onFile('#f2','#p2',async fs=>{fo=fs[0];$('#i2').src=await f2d(fo);$('#v2').classList.add('show');b.disabled=false});b.onclick=()=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width;c.height=img.height;c.getContext('2d').drawImage(img,0,0);c.toBlob(bl=>{const ext=m.value.split('/')[1].replace('jpeg','jpg');rc.innerHTML=`<div>✅ تبدیل به <b>${ext.toUpperCase()}</b></div><div>📦 ${fb(bl.size)}</div><img src="${URL.createObjectURL(bl)}" style="margin-top:10px;max-width:100%;border-radius:10px">`;r.classList.add('show');r._b=bl;r._n='conv.'+ext;log('convert-image',fo.name);bindR(r)},m.value,.92)};img.src=$('#i2').src}};
+
+/* ۳. برش عکس */
+TR['crop-image']=t=>shell(t,`<label class="fp" id="p3">📁 انتخاب عکس<input type="file" accept="image/*" id="f3" hidden></label><div class="pv" id="v3"><img id="i3"></div><div class="field mt"><label>نسبت</label><select id="rt3"><option value="free">آزاد</option><option value="1:1">۱:۱</option><option value="16:9">۱۶:۹</option><option value="4:3">۴:۳</option></select></div><button class="bp" id="b3" disabled>اجرا</button>${resBox('x3')}`);
+TI['crop-image']=()=>{const rt=$('#rt3'),b=$('#b3'),r=$('#x3'),rc=$('#x3c');let fo=null,w=0,h=0;onFile('#f3','#p3',async fs=>{fo=fs[0];const u=await f2d(fo);$('#i3').src=u;const im=await li(u);w=im.width;h=im.height;$('#v3').classList.add('show');b.disabled=false});b.onclick=()=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas'),ctx=c.getContext('2d');let sw,sh,sx,sy;const ratio=rt.value;if(ratio==='free'){sw=w;sh=h;sx=0;sy=0}else{const[rw,rh]=ratio.split(':').map(Number),tr=rw/rh,ir=w/h;if(ir>tr){sh=h;sw=Math.round(h*tr);sx=(w-sw)/2;sy=0}else{sw=w;sh=Math.round(w/tr);sx=0;sy=(h-sh)/2}}c.width=sw;c.height=sh;ctx.drawImage(img,sx,sy,sw,sh,0,0,sw,sh);c.toBlob(bl=>{rc.innerHTML=`<div>✅ ${fa(sw)}×${fa(sh)}</div><div>📦 ${fb(bl.size)}</div><img src="${URL.createObjectURL(bl)}" style="margin-top:10px;max-width:100%;border-radius:10px">`;r.classList.add('show');r._b=bl;r._n='cropped.jpg';log('crop-image',fo.name);bindR(r)},'image/jpeg',.92)};img.src=$('#i3').src}};
+
+/* ۴. ویرایش تصویر */
+TR['edit-image']=t=>shell(t,`<label class="fp" id="p4">📁 انتخاب عکس<input type="file" accept="image/*" id="f4" hidden></label><div class="pv" id="v4"><img id="i4"></div><div class="field mt"><label>چرخش</label><select id="rt4"><option value="0">بدون</option><option value="90">۹۰°</option><option value="180">۱۸۰°</option><option value="270">۲۷۰°</option></select></div><div class="cr"><input type="checkbox" id="fl4"><label for="fl4">آینه افقی</label></div><div class="field"><label>فیلتر</label><select id="ft4"><option value="none">بدون</option><option value="grayscale">سیاه‌وسفید</option><option value="sepia">سپیا</option><option value="invert">معکوس</option></select></div><button class="bp" id="b4" disabled>اجرا</button>${resBox('x4')}`);
+TI['edit-image']=()=>{const b=$('#b4'),r=$('#x4'),rc=$('#x4c');let fo=null;onFile('#f4','#p4',async fs=>{fo=fs[0];$('#i4').src=await f2d(fo);$('#v4').classList.add('show');b.disabled=false});b.onclick=()=>{const rot=+$('#rt4').value,flip=$('#fl4').checked,filt=$('#ft4').value,img=new Image();img.onload=()=>{const c=document.createElement('canvas'),ctx=c.getContext('2d'),sw=rot===90||rot===270;c.width=sw?img.height:img.width;c.height=sw?img.width:img.height;ctx.translate(c.width/2,c.height/2);ctx.rotate(rot*Math.PI/180);if(flip)ctx.scale(-1,1);ctx.filter={none:'',grayscale:'grayscale(1)',sepia:'sepia(1)',invert:'invert(1)'}[filt]||'';ctx.drawImage(img,-img.width/2,-img.height/2);c.toBlob(bl=>{rc.innerHTML=`<div>✅ ویرایش شد</div><div>📦 ${fb(bl.size)}</div><img src="${URL.createObjectURL(bl)}" style="margin-top:10px;max-width:100%;border-radius:10px">`;r.classList.add('show');r._b=bl;r._n='edited.jpg';log('edit-image',fo.name);bindR(r)},'image/jpeg',.92)};img.src=$('#i4').src}};
+
+/* ۵. عکس‌نوشته */
+TR['text-on-image']=t=>shell(t,`<label class="fp" id="p5">📁 انتخاب عکس<input type="file" accept="image/*" id="f5" hidden></label><div class="pv" id="v5"><img id="i5"></div><div class="field mt"><label>متن</label><textarea id="tx5" placeholder="متن شما..."></textarea></div><div class="field"><label>اندازه: <span id="sz5v">40</span>px</label><div class="rw"><input type="range" min="16" max="120" value="40" id="sz5"></div></div><div class="field"><label>رنگ</label><input type="color" id="cl5" value="#ffffff" style="width:100%;height:40px;border-radius:10px"></div><button class="bp" id="b5" disabled>اجرا</button>${resBox('x5')}`);
+TI['text-on-image']=()=>{const sz=$('#sz5'),szv=$('#sz5v'),b=$('#b5'),r=$('#x5'),rc=$('#x5c');let fo=null;sz.oninput=()=>szv.textContent=sz.value;onFile('#f5','#p5',async fs=>{fo=fs[0];$('#i5').src=await f2d(fo);$('#v5').classList.add('show');b.disabled=false});b.onclick=()=>{const tx=$('#tx5').value.trim();if(!tx){toast('متن را وارد کنید');return}const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width;c.height=img.height;const ctx=c.getContext('2d');ctx.drawImage(img,0,0);const fs=+sz.value;ctx.font=`bold ${fs}px Tahoma,sans-serif`;ctx.fillStyle=$('#cl5').value;ctx.textAlign='center';ctx.textBaseline='middle';ctx.shadowColor='rgba(0,0,0,.7)';ctx.shadowBlur=10;ctx.fillText(tx,c.width/2,c.height/2);c.toBlob(bl=>{rc.innerHTML=`<div>✅ متن اضافه شد</div><img src="${URL.createObjectURL(bl)}" style="margin-top:10px;max-width:100%;border-radius:10px">`;r.classList.add('show');r._b=bl;r._n='text-img.jpg';log('text-on-image',fo.name);bindR(r)},'image/jpeg',.92)};img.src=$('#i5').src}};
+
+/* ۶. SVG به عکس */
+TR['svg-to-image']=t=>shell(t,`<label class="fp" id="p6">📁 انتخاب SVG<input type="file" accept=".svg,image/svg+xml" id="f6" hidden></label><div class="pv" id="v6"><img id="i6"></div><div class="field mt"><label>فرمت</label><select id="m6"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option></select></div><button class="bp" id="b6" disabled>اجرا</button>${resBox('x6')}`);
+TI['svg-to-image']=()=>{const m=$('#m6'),b=$('#b6'),r=$('#x6'),rc=$('#x6c');let fo=null;onFile('#f6','#p6',fs=>{fo=fs[0];const rd=new FileReader();rd.onload=e=>{const bl=new Blob([e.target.result],{type:'image/svg+xml'});$('#i6').src=URL.createObjectURL(bl);$('#v6').classList.add('show');b.disabled=false};rd.readAsText(fo)},'.svg,image/svg+xml');b.onclick=()=>{const img=new Image();img.onload=()=>{const c=document.createElement('canvas');c.width=img.width*2;c.height=img.height*2;const ctx=c.getContext('2d');if(m.value==='image/jpeg'){ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height)}ctx.drawImage(img,0,0,c.width,c.height);c.toBlob(bl=>{const ext=m.value.split('/')[1];rc.innerHTML=`<div>✅ ${fa(c.width)}×${fa(c.height)}</div><div>📦 ${fb(bl.size)}</div><img src="${URL.createObjectURL(bl)}" style="margin-top:10px;max-width:100%;border-radius:10px">`;r.classList.add('show');r._b=bl;r._n='svg.'+ext;log('svg-to-image',fo.name);bindR(r)},m.value,.95)};img.src=$('#i6').src}};
+
+/* ۷. فاوآیکون */
+TR['favicon']=t=>shell(t,`<label class="fp" id="p7">📁 انتخاب عکس<input type="file" accept="image/*" id="f7" hidden></label><div class="pv" id="v7"><img id="i7"></div><button class="bp mt" id="b7" disabled>ساخت بسته فاوآیکون</button>${resBox('x7')}`);
+TI['favicon']=()=>{const b=$('#b7'),r=$('#x7'),rc=$('#x7c');let fo=null;onFile('#f7','#p7',async fs=>{fo=fs[0];$('#i7').src=await f2d(fo);$('#v7').classList.add('show');b.disabled=false});b.onclick=async()=>{if(!window.JSZip){toast('JSZip لود نشده');return}const img=new Image();img.onload=async()=>{const zip=new JSZip();for(const s of[16,32,48,64,128,256]){const c=document.createElement('canvas');c.width=s;c.height=s;c.getContext('2d').drawImage(img,0,0,s,s);const bl=await new Promise(r=>c.toBlob(r,'image/png'));zip.file(`favicon-${s}x${s}.png`,bl)}const zb=await zip.generateAsync({type:'blob'});rc.innerHTML=`<div>✅ بسته ساخته شد</div><div>📦 شامل: ۱۶، ۳۲، ۴۸، ۶۴، ۱۲۸، ۲۵۶</div><div>📁 ${fb(zb.size)}</div>`;r.classList.add('show');r._b=zb;r._n='favicon.zip';log('favicon',fo.name);bindR(r)};img.src=$('#i7').src}};
+
+/* ۸. ساخت QR */
+TR['qr-generate']=t=>shell(t,`<div class="field"><label>متن یا لینک</label><textarea id="tx8" placeholder="https://example.com"></textarea></div><div class="field"><label>تصحیح خطا</label><select id="lv8"><option value="L">L</option><option value="M" selected>M</option><option value="Q">Q</option><option value="H">H</option></select></div><button class="bp" id="b8">ساخت QR کد</button>${resBox('x8')}`);
+TI['qr-generate']=()=>{$('#b8').onclick=()=>{const tx=$('#tx8').value.trim();if(!tx){toast('متن را وارد کنید');return}if(!window.qrcode){toast('کتابخانه QR لود نشده');return}try{const qr=qrcode(0,$('#lv8').value);qr.addData(tx,'Byte');qr.make();const url=qr.createDataURL(4,2);const r=$('#x8'),rc=$('#x8c');rc.innerHTML=`<div>✅ QR ساخته شد (${fa(qr.getModuleCount())}×${fa(qr.getModuleCount())} ماژول)</div><img src="${url}" style="margin-top:10px;max-width:100%;border-radius:10px;background:#fff;padding:10px">`;r.classList.add('show');fetch(url).then(r=>r.blob()).then(bl=>{r._b=bl;r._n='qr.png';bindR(r)});log('qr-generate','QR')}catch(e){toast('خطا: '+e.message)}}};
+
+/* ۹. اسکن QR */
+TR['qr-scan']=t=>shell(t,`<label class="fp" id="p9">📁 انتخاب عکس QR<input type="file" accept="image/*" id="f9" hidden></label><div class="pv" id="v9"><img id="i9"></div><button class="bp mt" id="b9" disabled>اسکن</button>${resBox('x9')}`);
+TI['qr-scan']=()=>{const b=$('#b9'),r=$('#x9'),rc=$('#x9c');onFile('#f9','#p9',async fs=>{$('#i9').src=await f2d(fs[0]);$('#v9').classList.add('show');b.disabled=false});b.onclick=()=>{const img=$('#i9');if('BarcodeDetector'in window){new BarcodeDetector({formats:['qr_code']}).detect(img).then(bc=>{if(bc.length)show(bc[0].rawValue);else fb()}).catch(fb)}else fb();function fb(){if(!window.jsQR){rc.innerHTML='<div style="color:var(--err)">⚠️ jsQR لود نشده</div>';r.classList.add('show');return}const c=document.createElement('canvas'),ctx=c.getContext('2d');c.width=img.naturalWidth;c.height=img.naturalHeight;ctx.drawImage(img,0,0);const d=ctx.getImageData(0,0,c.width,c.height);const code=jsQR(d.data,d.width,d.height);if(code)show(code.data);else{rc.innerHTML='<div style="color:var(--err)">❌ یافت نشد</div>';r.classList.add('show')}}function show(txt){rc.innerHTML=`<div>✅ متن:</div><pre style="direction:ltr;text-align:left;word-break:break-all">${txt.replace(/</g,'&lt;')}</pre><button class="bp mt" id="cp9">📋 کپی</button>`;r.classList.add('show');r._b=new Blob([txt],{type:'text/plain'});r._n='qr.txt';setTimeout(()=>{const cp=$('#cp9');if(cp)cp.onclick=()=>{navigator.clipboard.writeText(txt);toast('کپی شد')}},50);log('qr-scan','QR');bindR(r)}}};
+
+/* ۱۰. عکس به PDF */
+TR['image-to-pdf']=t=>shell(t,`<label class="fp" id="p10">📁 انتخاب عکس‌ها<input type="file" accept="image/*" multiple id="f10" hidden></label><div id="ls10" class="mt"></div><button class="bp" id="b10" disabled>ساخت PDF</button>${resBox('x10')}`);
+TI['image-to-pdf']=()=>{const b=$('#b10'),r=$('#x10'),rc=$('#x10c');let files=[];onFile('#f10','#p10',fs=>{files=fs;$('#ls10').innerHTML=fs.map((f,i)=>`<div style="font-size:12px;color:var(--txt2);padding:3px 0">${fa(i+1)}. ${f.name}</div>`).join('');b.disabled=false},'image/*',true);b.onclick=async()=>{if(!window.jspdf?.jsPDF){toast('jsPDF لود نشده');return}const{jsPDF}=window.jspdf;const pdf=new jsPDF({unit:'mm',format:'a4'});const W=pdf.internal.pageSize.getWidth(),H=pdf.internal.pageSize.getHeight(),M=10;for(let i=0;i<files.length;i++){if(i>0)pdf.addPage();const u=await f2d(files[i]),img=await li(u);const ratio=Math.min((W-M*2)/img.width,(H-M*2)/img.height);const w=img.width*ratio,h=img.height*ratio;pdf.addImage(u,'JPEG',(W-w)/2,(H-h)/2,w,h)}const bl=pdf.output('blob');rc.innerHTML=`<div>✅ PDF ساخته شد</div><div>📄 ${fa(files.length)} صفحه</div><div>📦 ${fb(bl.size)}</div>`;r.classList.add('show');r._b=bl;r._n='images.pdf';log('image-to-pdf',files.length+' imgs');bindR(r)}};
+
+/* ۱۱. ادغام PDF */
+TR['merge-pdf']=t=>shell(t,`<label class="fp" id="p11">📁 انتخاب PDFها<input type="file" accept=".pdf" multiple id="f11" hidden></label><div id="ls11" class="mt"></div><button class="bp" id="b11" disabled>ادغام</button>${resBox('x11')}`);
+TI['merge-pdf']=()=>{const b=$('#b11'),r=$('#x11'),rc=$('#x11c');let files=[];onFile('#f11','#p11',fs=>{files=fs;$('#ls11').innerHTML=fs.map((f,i)=>`<div style="font-size:12px;color:var(--txt2);padding:3px 0">${fa(i+1)}. ${f.name}</div>`).join('');b.disabled=false},'.pdf,application/pdf',true);b.onclick=async()=>{if(!window.PDFLib?.PDFDocument){toast('pdf-lib لود نشده');return}const{PDFDocument}=window.PDFLib;const merged=await PDFDocument.create();for(const f of files){const buf=await f.arrayBuffer();const pdf=await PDFDocument.load(buf);const pages=await merged.copyPages(pdf,pdf.getPageIndices());pages.forEach(p=>merged.addPage(p))}const bytes=await merged.save();const bl=new Blob([bytes],{type:'application/pdf'});rc.innerHTML=`<div>✅ ادغام شد</div><div>📄 ${fa(merged.getPageCount())} صفحه</div><div>📦 ${fb(bl.size)}</div>`;r.classList.add('show');r._b=bl;r._n='merged.pdf';log('merge-pdf',files.length+' PDFs');bindR(r)}};
+
+/* ۱۲. متن به PDF */
+TR['text-to-pdf']=t=>shell(t,`<div class="field"><label>متن</label><textarea id="tx12" style="min-height:160px" placeholder="متن خود را بنویسید..."></textarea></div><div class="field"><label>اندازه فونت: <span id="sz12v">14</span></label><div class="rw"><input type="range" min="10" max="28" value="14" id="sz12"></div></div><button class="bp" id="b12">ساخت PDF</button>${resBox('x12')}`);
+TI['text-to-pdf']=()=>{const sz=$('#sz12'),szv=$('#sz12v');sz.oninput=()=>szv.textContent=sz.value;$('#b12').onclick=()=>{const tx=$('#tx12').value;if(!tx.trim()){toast('متن را وارد کنید');return}if(!window.jspdf?.jsPDF){toast('jsPDF لود نشده');return}const{jsPDF}=window.jspdf;const pdf=new jsPDF({unit:'pt',format:'a4'});const W=pdf.internal.pageSize.getWidth(),H=pdf.internal.pageSize.getHeight(),M=40,fs=+sz.value;pdf.setFontSize(fs);const lines=pdf.splitTextToSize(tx,W-M*2);let y=M+fs;for(const l of lines){if(y>H-M){pdf.addPage();y=M+fs}pdf.text(l,M,y);y+=fs*1.6}const bl=pdf.output('blob');const r=$('#x12'),rc=$('#x12c');rc.innerHTML=`<div>✅ PDF ساخته شد</div><div>📄 ${fa(pdf.internal.getNumberOfPages())} صفحه</div><div>📦 ${fb(bl.size)}</div>`;r.classList.add('show');r._b=bl;r._n='text.pdf';log('text-to-pdf','text');bindR(r)}};
+
+/* ۱۳. تحلیلگر متن */
+TR['text-analyzer']=t=>shell(t,`<div class="field"><label>متن</label><textarea id="tx13" style="min-height:160px" placeholder="متن را وارد کنید..."></textarea></div><button class="bp" id="b13">تحلیل</button>${resBox('x13')}`);
+TI['text-analyzer']=()=>{$('#b13').onclick=()=>{const t=$('#tx13').value;if(!t.trim()){toast('متن را وارد کنید');return}const ch=t.length,cns=t.replace(/\s/g,'').length,w=t.trim().split(/\s+/).filter(Boolean).length,s=t.split(/[.!?؟\n]+/).filter(Boolean).length,p=t.split(/\n\s*\n/).filter(Boolean).length,rt=Math.ceil(w/200);const r=$('#x13'),rc=$('#x13c');rc.innerHTML=`<div>🔤 حروف: <b>${fa(ch)}</b> (بدون فاصله: <b>${fa(cns)}</b>)</div><div>📝 کلمات: <b>${fa(w)}</b></div><div>📜 جملات: <b>${fa(s)}</b></div><div>📄 پاراگراف: <b>${fa(p)}</b></div><div>⏱️ مطالعه: <b>${fa(rt)} دقیقه</b></div>`;r.classList.add('show');r._b=new Blob([rc.innerText],{type:'text/plain'});r._n='analysis.txt';log('text-analyzer',w+' words');bindR(r)}};
+
+/* ۱۴. مقایسه متن */
+TR['text-diff']=t=>shell(t,`<div class="field"><label>متن اول</label><textarea id="t1_14" style="min-height:80px"></textarea></div><div class="field"><label>متن دوم</label><textarea id="t2_14" style="min-height:80px"></textarea></div><button class="bp" id="b14">مقایسه</button>${resBox('x14')}`);
+TI['text-diff']=()=>{$('#b14').onclick=()=>{const a=$('#t1_14').value,b=$('#t2_14').value;if(!a||!b){toast('هر دو متن را وارد کنید');return}if(!window.Diff){toast('Diff لود نشده');return}const d=Diff.diffWords(a,b);let h='<div style="line-height:2">',ad=0,rm=0;d.forEach(p=>{if(p.added){h+=`<span style="background:rgba(46,158,107,.2);padding:2px 4px;border-radius:4px">${p.value.replace(/</g,'&lt;')}</span>`;ad+=p.value.length}else if(p.removed){h+=`<span style="background:rgba(217,74,74,.2);text-decoration:line-through;padding:2px 4px;border-radius:4px">${p.value.replace(/</g,'&lt;')}</span>`;rm+=p.value.length}else h+=p.value.replace(/</g,'&lt;')});h+='</div>';const r=$('#x14'),rc=$('#x14c');rc.innerHTML=h+`<div class="mt">📊 <b style="color:var(--ok)">+${fa(ad)}</b> / <b style="color:var(--err)">-${fa(rm)}</b></div>`;r.classList.add('show');r._b=new Blob([a+'\n---\n'+b],{type:'text/plain'});r._n='diff.txt';log('text-diff','diff');bindR(r)}};
+
+/* ۱۵. متا تگ */
+TR['meta-tags']=t=>shell(t,`<div class="field"><label>عنوان</label><input type="text" id="mt15"></div><div class="field"><label>توضیحات</label><textarea id="md15"></textarea></div><div class="field"><label>لینک تصویر</label><input type="text" id="mi15"></div><button class="bp" id="b15">تولید</button>${resBox('x15')}`);
+TI['meta-tags']=()=>{$('#b15').onclick=()=>{const t=$('#mt15').value.trim(),d=$('#md15').value.trim(),i=$('#mi15').value.trim();if(!t){toast('عنوان را وارد کنید');return}const tags=`<title>${t}</title>\n<meta name="description" content="${d}">\n<meta property="og:title" content="${t}">\n<meta property="og:description" content="${d}">\n${i?`<meta property="og:image" content="${i}">`:''}\n<meta property="twitter:card" content="summary_large_image">\n<meta property="twitter:title" content="${t}">\n<meta property="twitter:description" content="${d}">`;const r=$('#x15'),rc=$('#x15c');rc.innerHTML=`<pre>${tags.replace(/</g,'&lt;')}</pre><button class="bp mt" id="cp15">📋 کپی</button>`;r.classList.add('show');r._b=new Blob([tags],{type:'text/html'});r._n='meta.html';setTimeout(()=>{const c=$('#cp15');if(c)c.onclick=()=>{navigator.clipboard.writeText(tags);toast('کپی شد')}},50);log('meta-tags',t);bindR(r)}};
+
+/* ۱۶. یادداشت */
+TR['notes']=t=>shell(t,`<div class="field"><label>عنوان</label><input type="text" id="nt16"></div><div class="field"><label>متن</label><textarea id="nb16" style="min-height:100px"></textarea></div><button class="bp" id="sv16">💾 ذخیره</button><h5 class="mt" style="margin-bottom:8px">یادداشت‌ها</h5><div id="nl16"></div>`);
+TI['notes']=()=>{function load(){const ns=JSON.parse(localStorage.getItem('ia_notes')||'[]');const l=$('#nl16');if(!ns.length){l.innerHTML='<div class="tm" style="text-align:center;padding:20px">یادداشتی نیست</div>';return}l.innerHTML=ns.map((n,i)=>`<div style="background:var(--card2);padding:12px;border-radius:12px;margin-bottom:8px"><div style="display:flex;justify-content:space-between"><strong>${n.t||'بدون عنوان'}</strong><button data-i="${i}" class="dn" style="color:var(--err)">🗑️</button></div><div style="font-size:12px;color:var(--txt2);margin-top:4px">${(n.b||'').slice(0,100)}</div></div>`).join('');l.querySelectorAll('.dn').forEach(b=>b.onclick=()=>{const ns=JSON.parse(localStorage.getItem('ia_notes')||'[]');ns.splice(+b.dataset.i,1);localStorage.setItem('ia_notes',JSON.stringify(ns));load();toast('حذف شد')})}$('#sv16').onclick=()=>{const t=$('#nt16').value.trim(),b=$('#nb16').value.trim();if(!t&&!b){toast('عنوان یا متن');return}const ns=JSON.parse(localStorage.getItem('ia_notes')||'[]');ns.unshift({t,b,ts:Date.now()});localStorage.setItem('ia_notes',JSON.stringify(ns));$('#nt16').value='';$('#nb16').value='';load();toast('ذخیره شد');log('notes',t)};load()};
+
+/* ۱۷. فرمت کد */
+TR['code-formatter']=t=>shell(t,`<div class="field"><label>زبان</label><select id="ln17"><option value="json">JSON</option><option value="js">JS</option><option value="html">HTML</option><option value="css">CSS</option></select></div><div class="field"><label>کد</label><textarea id="cd17" style="min-height:100px;direction:ltr;text-align:left;font-family:monospace"></textarea></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button class="bp" id="fm17" style="margin:0">✨ فرمت</button><button class="bp" id="mn17" style="margin:0;background:var(--sec)">📦 فشرده</button></div>${resBox('x17')}`);
+TI['code-formatter']=()=>{function run(min){const c=$('#cd17').value;if(!c.trim()){toast('کد را وارد کنید');return}const l=$('#ln17').value;let o;if(l==='json')try{o=min?JSON.stringify(JSON.parse(c)):JSON.stringify(JSON.parse(c),null,2)}catch(e){o='❌ '+e.message}else if(l==='js')o=min?c.replace(/\s+/g,' ').replace(/\s*([{}();,:])\s*/g,'$1'):c.replace(/\{/g,'{\n  ').replace(/;/g,';\n  ').replace(/\}/g,'\n}\n');else if(l==='html')o=min?c.replace(/>\s+</g,'><'):c.replace(/></g,'>\n<');else o=min?c.replace(/\s+/g,' ').replace(/\s*([{}:;,])\s*/g,'$1'):c.replace(/\{/g,'{\n  ').replace(/;/g,';\n  ').replace(/\}/g,'\n}\n');const r=$('#x17'),rc=$('#x17c');rc.innerHTML=`<pre style="direction:ltr;text-align:left;white-space:pre-wrap;font-size:11px">${o.replace(/</g,'&lt;')}</pre>`;r.classList.add('show');r._b=new Blob([o],{type:'text/plain'});r._n='code.'+l;log('code-formatter',l);bindR(r)}$('#fm17').onclick=()=>run(false);$('#mn17').onclick=()=>run(true)};
+
+/* ۱۸. ریجکس */
+TR['regex-test']=t=>shell(t,`<div class="field"><label>الگو</label><input type="text" id="pt18" style="direction:ltr;font-family:monospace" placeholder="\\d+"></div><div class="field"><label>پرچم</label><input type="text" id="fl18" value="g" style="width:80px;direction:ltr"></div><div class="field"><label>متن</label><textarea id="tx18" style="min-height:80px;direction:ltr"></textarea></div><button class="bp" id="b18">تست</button>${resBox('x18')}`);
+TI['regex-test']=()=>{$('#b18').onclick=()=>{try{const re=new RegExp($('#pt18').value,$('#fl18').value);const ms=[...$('#tx18').value.matchAll(new RegExp($('#pt18').value,$('#fl18').value.includes('g')?$('#fl18').value:$('#fl18').value+'g'))];const r=$('#x18'),rc=$('#x18c');if(!ms.length)rc.innerHTML='<div style="color:var(--err)">❌ تطبیقی یافت نشد</div>';else rc.innerHTML=`<div>✅ ${fa(ms.length)} تطبیق</div>${ms.map((m,i)=>`<div style="background:var(--card2);padding:6px 10px;border-radius:8px;margin-top:4px;font-family:monospace;direction:ltr;font-size:12px">#${fa(i+1)}: "${m[0]}"</div>`).join('')}`;r.classList.add('show');r._b=new Blob([ms.map(m=>m[0]).join('\n')],{type:'text/plain'});r._n='regex.txt';log('regex-test',$('#pt18').value);bindR(r)}catch(e){toast('خطا: '+e.message)}}};
+
+/* ۱۹. رمز عبور */
+TR['password']=t=>shell(t,`<div class="field"><label>طول: <span id="ln19v">16</span></label><div class="rw"><input type="range" min="6" max="64" value="16" id="ln19"></div></div><div class="cr"><input type="checkbox" id="u19" checked><label for="u19">A-Z</label></div><div class="cr"><input type="checkbox" id="l19" checked><label for="l19">a-z</label></div><div class="cr"><input type="checkbox" id="n19" checked><label for="n19">0-9</label></div><div class="cr"><input type="checkbox" id="s19" checked><label for="s19">!@#$</label></div><button class="bp" id="b19">تولید رمز</button>${resBox('x19')}`);
+TI['password']=()=>{const ln=$('#ln19'),lnv=$('#ln19v');ln.oninput=()=>lnv.textContent=ln.value;$('#b19').onclick=()=>{let ch='';if($('#u19').checked)ch+='ABCDEFGHIJKLMNOPQRSTUVWXYZ';if($('#l19').checked)ch+='abcdefghijklmnopqrstuvwxyz';if($('#n19').checked)ch+='0123456789';if($('#s19').checked)ch+='!@#$%^&*()_+-=';if(!ch){toast('حداقل یک گزینه');return}const a=new Uint32Array(ln.value);crypto.getRandomValues(a);let p='';for(let i=0;i<ln.value;i++)p+=ch[a[i]%ch.length];const ent=Math.log2(Math.pow(ch.length,ln.value));let str='ضعیف',col='var(--err)';if(ent>=80){str='قوی';col='var(--ok)'}else if(ent>=50){str='متوسط';col='var(--sec)'}const r=$('#x19'),rc=$('#x19c');rc.innerHTML=`<div style="font-family:monospace;font-size:16px;direction:ltr;text-align:left;background:var(--bg);padding:12px;border-radius:10px;word-break:break-all">${p}</div><div class="mt">🔐 <b style="color:${col}">${str}</b> (${fa(ent.toFixed(0))} بیت)</div><button class="bp mt" id="cp19">📋 کپی</button>`;r.classList.add('show');r._b=new Blob([p],{type:'text/plain'});r._n='pwd.txt';setTimeout(()=>{const c=$('#cp19');if(c)c.onclick=()=>{navigator.clipboard.writeText(p);toast('کپی شد')}},50);log('password','pwd');bindR(r)}};
+
+/* ۲۰. تقویم شمسی */
+function g2j(gy,gm,gd){const g=[0,31,59,90,120,151,181,212,243,273,304,334];const gy2=gm>2?gy+1:gy;let d=355666+365*gy+~~((gy2+3)/4)-~~((gy2+99)/100)+~~((gy2+399)/400)+gd+g[gm-1];let jy=-1595+33*~~(d/12053);d%=12053;jy+=4*~~(d/1461);d%=1461;if(d>365){jy+=~~((d-1)/365);d=(d-1)%365}const jm=d<186?1+~~(d/31):7+~~((d-186)/30);const jd=1+(d<186?d%31:(d-186)%30);return[jy,jm,jd]}
+function j2g(jy,jm,jd){jy+=1595;let d=-355668+365*jy+~~(jy/33)*8+~~((jy%33+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186);let gy=400*~~(d/146097);d%=146097;if(d>36524){gy+=100*~~(--d/36524);d%=36524;if(d>=365)d++}gy+=4*~~(d/1461);d%=1461;if(d>365){gy+=~~((d-1)/365);d=(d-1)%365}let gd=d+1;const sa=[0,31,(gy%4===0&&gy%100!==0)||(gy%400===0)?29:28,31,30,31,30,31,31,30,31,30,31];let gm=0;for(gm=0;gm<13&&gd>sa[gm];gm++)gd-=sa[gm];return[gy,gm,gd]}
+const JM=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+
+TR['calendar']=t=>shell(t,`<div id="cal20" style="text-align:center"></div>`);
+TI['calendar']=()=>{const now=new Date();const[jy,jm,jd]=g2j(now.getFullYear(),now.getMonth()+1,now.getDate());const[fy,fm]=j2g(jy,jm,1);const fd=new Date(fy,fm-1,1);let sd=(fd.getDay()+1)%7;const dim=jm<=6?31:jm<=11?30:29;let h=`<h4 style="margin-bottom:12px">${JM[jm-1]} ${fa(jy)}</h4>`;h+=`<div style="font-size:12px;color:var(--txt3);margin-bottom:12px">${fa(now.getDate())}/${fa(now.getMonth()+1)}/${fa(now.getFullYear())} میلادی</div>`;h+=`<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px">`;['ش','ی','د','س','چ','پ','ج'].forEach(d=>h+=`<div style="font-size:11px;color:var(--txt3);padding:6px">${d}</div>`);for(let i=0;i<sd;i++)h+=`<div></div>`;for(let d=1;d<=dim;d++){const td=d===jd;h+=`<div style="padding:8px;border-radius:8px;font-size:13px;${td?'background:var(--pri);color:#fff;font-weight:700':'background:var(--card2)'}">${fa(d)}</div>`}h+=`</div>`;$('#cal20').innerHTML=h};
+
+/* ۲۱. تبدیل تاریخ */
+TR['date-convert']=t=>shell(t,`<div class="field"><label>از</label><select id="fr21"><option value="j2g">شمسی → میلادی</option><option value="g2j">میلادی → شمسی</option></select></div><div class="field"><label>تاریخ</label><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><input type="number" id="y21" placeholder="سال"><input type="number" id="m21" placeholder="ماه"><input type="number" id="d21" placeholder="روز"></div></div><button class="bp" id="b21">تبدیل</button>${resBox('x21')}`);
+TI['date-convert']=()=>{$('#b21').onclick=()=>{const y=+$('#y21').value,m=+$('#m21').value,d=+$('#d21').value;if(!y||!m||!d){toast('تاریخ کامل');return}try{let o;if($('#fr21').value==='j2g'){const[gy,gm,gd]=j2g(y,m,d);o=`${fa(gd)}/${fa(gm)}/${fa(gy)} میلادی`}else{const[jy,jm,jd]=g2j(y,m,d);o=`${fa(jd)} ${JM[jm-1]} ${fa(jy)} شمسی`}const r=$('#x21'),rc=$('#x21c');rc.innerHTML=`<div style="font-size:18px;font-weight:700;text-align:center;padding:16px">${o}</div>`;r.classList.add('show');r._b=new Blob([o],{type:'text/plain'});r._n='date.txt';log('date-convert',o);bindR(r)}catch(e){toast('خطا')}}};
+
+/* ۲۲. محاسبه سن */
+TR['age-calc']=t=>shell(t,`<div class="field"><label>تاریخ تولد (شمسی)</label><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><input type="number" id="y22" placeholder="سال"><input type="number" id="m22" placeholder="ماه"><input type="number" id="d22" placeholder="روز"></div></div><button class="bp" id="b22">محاسبه سن</button>${resBox('x22')}`);
+TI['age-calc']=()=>{$('#b22').onclick=()=>{const y=+$('#y22').value,m=+$('#m22').value,d=+$('#d22').value;if(!y||!m||!d){toast('تاریخ کامل');return}try{const[gy,gm,gd]=j2g(y,m,d);const birth=new Date(gy,gm-1,gd),now=new Date();if(birth>now){toast('تاریخ اشتباه');return}let yrs=now.getFullYear()-birth.getFullYear(),mos=now.getMonth()-birth.getMonth(),dys=now.getDate()-birth.getDate();if(dys<0){mos--;dys+=30}if(mos<0){yrs--;mos+=12}const td=Math.floor((now-birth)/864e5);const r=$('#x22'),rc=$('#x22c');rc.innerHTML=`<div style="text-align:center;padding:12px"><div style="font-size:28px;font-weight:700;color:var(--pri)">${fa(yrs)} سال ${fa(mos)} ماه ${fa(dys)} روز</div><div class="mt tm">📊 مجموع: ${fa(td)} روز</div></div>`;r.classList.add('show');r._b=new Blob([`${yrs} سال`],{type:'text/plain'});r._n='age.txt';log('age-calc',yrs+' yrs');bindR(r)}catch(e){toast('خطا')}}};
+
+/* ۲۳. فاصله شهرها */
+TR['city-dist']=t=>{const opts=CITIES.map(c=>`<option>${c.n}</option>`).join('');return shell(t,`<div class="field"><label>مبدأ</label><select id="c1_23">${opts}</select></div><div class="field"><label>مقصد</label><select id="c2_23">${opts}</select></div><button class="bp" id="b23">محاسبه</button>${resBox('x23')}`)};
+TI['city-dist']=()=>{const c2=$('#c2_23');if(CITIES.length>1)c2.value=CITIES[1].n;$('#b23').onclick=()=>{const a=CITIES.find(c=>c.n===$('#c1_23').value),b=CITIES.find(c=>c.n===c2.value);if(!a||!b||a.n===b.n){toast('دو شهر متفاوت');return}const R=6371,dLa=(b.la-a.la)*Math.PI/180,dLo=(b.lo-a.lo)*Math.PI/180;const h=Math.sin(dLa/2)**2+Math.cos(a.la*Math.PI/180)*Math.cos(b.la*Math.PI/180)*Math.sin(dLo/2)**2;const dist=R*2*Math.atan2(Math.sqrt(h),Math.sqrt(1-h));const r=$('#x23'),rc=$('#x23c');rc.innerHTML=`<div style="text-align:center;padding:12px"><div style="color:var(--txt2)">${a.n} ↔ ${b.n}</div><div style="font-size:28px;font-weight:700;color:var(--pri);margin:12px 0">📍 ${fa(dist.toFixed(0))} km</div><div class="tm">⏱️ ~${fa((dist/80).toFixed(1))} ساعت رانندگی</div></div>`;r.classList.add('show');r._b=new Blob([`${a.n}-${b.n}: ${dist.toFixed(0)}km`],{type:'text/plain'});r._n='dist.txt';log('city-dist',a.n+'-'+b.n);bindR(r)}};
+
+/* ۲۴. دیکشنری */
+TR['dictionary']=t=>shell(t,`<div class="field"><label>جستجو</label><input type="text" id="sr24" placeholder="فارسی یا انگلیسی..."></div><div id="dl24" style="max-height:400px;overflow-y:auto"></div>`);
+TI['dictionary']=()=>{const sr=$('#sr24'),dl=$('#dl24');function render(f=''){const q=f.trim().toLowerCase();const ls=DICT.filter(w=>!q||w.e.toLowerCase().includes(q)||w.f.includes(q)).slice(0,50);dl.innerHTML=ls.length?ls.map(w=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--brd)"><strong>${w.f}</strong><span style="direction:ltr;color:var(--pri)">${w.e}</span></div>`).join(''):'<div class="tm" style="text-align:center;padding:20px">یافت نشد</div>'}sr.oninput=()=>render(sr.value);render()};
+
+/* ۲۵. فال حافظ */
+TR['hafez']=t=>shell(t,`<div style="text-align:center;padding:20px 0"><div style="font-size:48px;margin-bottom:12px">📜</div><p class="tm">نیت کنید و دکمه را بزنید</p><button class="bp" id="b25" style="max-width:240px;margin:0 auto">🔮 فال بگیر</button></div>${resBox('x25')}`);
+TI['hafez']=()=>{$('#b25').onclick=()=>{const g=GHAZALS[Math.floor(Math.random()*GHAZALS.length)];const r=$('#x25'),rc=$('#x25c');rc.innerHTML=`<div style="text-align:center;padding:12px"><div style="font-size:12px;color:var(--txt3);margin-bottom:12px">غزل ${fa(g.n)}</div><div style="font-size:15px;line-height:2.2;white-space:pre-wrap;margin-bottom:16px">${g.t}</div><div style="background:var(--card2);padding:12px;border-radius:12px;font-size:13px;color:var(--txt2);text-align:right"><b>تعبیر:</b> ${g.m}</div></div>`;r.classList.add('show');r._b=new Blob([g.t],{type:'text/plain'});r._n='hafez.txt';log('hafez','ghazal '+g.n);bindR(r)}};
+
+/* ═══════════ Init ═══════════ */
+setTheme(localStorage.getItem('ia_theme')||'light');
+$('#themeBtn').onclick=()=>setTheme(S.theme==='light'?'dark':'light');
+$('#darkSw').onchange=e=>setTheme(e.target.checked?'dark':'light');
+$('#clrHist').onclick=()=>{if(confirm('حذف؟')){S.act=[];localStorage.removeItem('ia_act');renderAct();toast('پاک شد')}};
+$('#clrNotes').onclick=()=>{if(confirm('حذف؟')){localStorage.removeItem('ia_notes');toast('پاک شد')}};
+renderChips();renderGrid();renderAct();
+</script>
+</body>
+</html>
