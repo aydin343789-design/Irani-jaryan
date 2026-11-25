@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>جریان ایرانی Pro</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#070912;--bg2:#0e1324;--panel:rgba(18,25,46,.82);--panel2:rgba(29,39,70,.72);
+  --line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.18);--text:#f4f7ff;--muted:#95a1bd;
+  --accent:#7c3aed;--accent2:#06b6d4;--accent3:#f97316;--green:#22c55e;--red:#ef4444;--yellow:#f59e0b;
+  --tg:#2ca5e0;--bale:#30c978;--rubika:#ff2d72;--soroush:#ff9f1c;--gap:#00c2ff;--ig:#e1306c;--mail:#ea4335;
+  --r:22px;--r2:16px;--shadow:0 22px 70px rgba(0,0,0,.45);--safe-bottom:env(safe-area-inset-bottom,0px)
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:ui-rounded,"Vazirmatn","Segoe UI",Tahoma,Arial,sans-serif}
+body:before{content:"";position:fixed;inset:-25%;z-index:-3;background:radial-gradient(circle at 18% 8%,rgba(124,58,237,.35),transparent 33%),radial-gradient(circle at 86% 18%,rgba(6,182,212,.22),transparent 30%),radial-gradient(circle at 70% 92%,rgba(249,115,22,.16),transparent 34%),linear-gradient(160deg,#060813 0%,#0b1022 55%,#070912 100%)}
+body:after{content:"";position:fixed;inset:0;z-index:-2;opacity:.28;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:34px 34px;mask-image:radial-gradient(circle at 50% 10%,black,transparent 75%)}
+button,input,textarea,select{font:inherit}button{border:none;cursor:pointer;color:inherit}input,textarea,select{outline:none;color:var(--text)}
+.app{height:100dvh;max-width:520px;margin:0 auto;position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(9,13,25,.78),rgba(9,12,22,.94));border-inline:1px solid rgba(255,255,255,.08);box-shadow:0 0 0 1px rgba(255,255,255,.03),0 50px 120px rgba(0,0,0,.55)}
+.topbar{height:72px;padding:12px 14px;display:flex;align-items:center;gap:10px;background:linear-gradient(180deg,rgba(16,22,42,.92),rgba(12,17,31,.72));border-bottom:1px solid var(--line);backdrop-filter:blur(22px);position:relative;z-index:40}
+.icon-btn{width:44px;height:44px;border-radius:15px;background:rgba(255,255,255,.07);border:1px solid var(--line);display:grid;place-items:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.06);transition:.2s}.icon-btn:active{transform:scale(.94)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}.logo{width:46px;height:46px;border-radius:17px;display:grid;place-items:center;background:conic-gradient(from 210deg,var(--accent),var(--accent2),var(--accent3),var(--accent));box-shadow:0 14px 34px rgba(124,58,237,.35);position:relative}.logo:after{content:"";position:absolute;inset:2px;border-radius:15px;background:rgba(8,12,25,.34);backdrop-filter:blur(6px)}.logo span{position:relative;z-index:1;font-size:22px}.brand h1{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.brand p{font-size:11px;color:var(--muted);margin-top:1px}.status-chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;padding:8px 10px;border-radius:99px;background:rgba(239,68,68,.12);color:#fecaca;border:1px solid rgba(239,68,68,.25);white-space:nowrap}.status-chip.on{background:rgba(34,197,94,.12);color:#bbf7d0;border-color:rgba(34,197,94,.28)}.status-chip i{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 5px rgba(255,255,255,.05);animation:pulse 1.8s infinite}@keyframes pulse{50%{opacity:.45;transform:scale(.7)}}
+.content{height:calc(100dvh - 72px);overflow:auto;padding:14px 14px 128px;scroll-behavior:smooth}.content::-webkit-scrollbar{width:0}.screen{display:none;animation:enter .28s ease}.screen.active{display:block}@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);z-index:80;opacity:0;pointer-events:none;transition:.25s}.drawer-backdrop.show{opacity:1;pointer-events:auto}.drawer{position:absolute;inset-block:0;right:0;width:min(84%,390px);z-index:90;background:linear-gradient(180deg,rgba(17,24,45,.98),rgba(8,12,24,.98));border-left:1px solid var(--line2);box-shadow:-28px 0 70px rgba(0,0,0,.45);transform:translateX(105%);transition:.32s cubic-bezier(.2,.8,.2,1);padding:18px 14px calc(18px + var(--safe-bottom));display:flex;flex-direction:column;gap:14px}.drawer.show{transform:none}.drawer-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line)}.drawer-title{display:flex;gap:10px;align-items:center}.drawer-title b{font-size:15px}.drawer-title small{display:block;color:var(--muted);font-size:11px}.menu{display:grid;gap:8px}.menu button{width:100%;display:flex;align-items:center;gap:10px;padding:12px 12px;border-radius:16px;background:transparent;color:var(--muted);text-align:right;transition:.2s}.menu button:hover,.menu button.active{background:linear-gradient(90deg,rgba(124,58,237,.22),rgba(6,182,212,.08));color:var(--text);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}.menu .m-ico{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.07)}.maker-mini{margin-top:auto;padding:14px;border-radius:20px;background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(6,182,212,.12));border:1px solid var(--line)}.maker-mini small{color:var(--muted)}
+.card{background:linear-gradient(180deg,var(--panel),rgba(16,22,42,.72));border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px;position:relative;overflow:hidden}.card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 35%);pointer-events:none}.card>*{position:relative}.hero{padding:18px;background:radial-gradient(circle at 15% 0,rgba(6,182,212,.22),transparent 38%),linear-gradient(135deg,rgba(124,58,237,.30),rgba(19,27,50,.75));}.hero h2{font-size:22px;line-height:1.45}.hero p{margin-top:8px;color:#c8d1e8;font-size:12px}.hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.section-title{font-size:12px;color:var(--muted);font-weight:900;margin:16px 4px 10px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.4px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{min-height:90px;padding:12px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.025));display:flex;flex-direction:column;justify-content:space-between}.stat b{font-size:24px}.stat span{font-size:10px;color:var(--muted)}.stat.green b{color:var(--green)}.stat.red b{color:var(--red)}.stat.blue b{color:var(--accent2)}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.kv{display:grid;gap:10px}.kv .row{padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.09)}.kv .row:last-child{border-bottom:0}.kv small{color:var(--muted)}.kv b{font-size:12px}.platforms{display:flex;flex-wrap:wrap;gap:8px}.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:11px;font-weight:800;color:var(--muted)}.chip.on{color:#d1fae5;border-color:rgba(34,197,94,.38);background:rgba(34,197,94,.11)}.chip.tg{--c:var(--tg)}.chip.bale{--c:var(--bale)}.chip.rubika{--c:var(--rubika)}.chip.soroush{--c:var(--soroush)}.chip.gap{--c:var(--gap)}.chip.ig{--c:var(--ig)}.chip.mail{--c:var(--mail)}.chip i{width:8px;height:8px;border-radius:50%;background:var(--c,var(--muted));box-shadow:0 0 18px var(--c,var(--muted))}.privacy{border-color:rgba(34,197,94,.25);background:linear-gradient(135deg,rgba(34,197,94,.14),rgba(6,182,212,.06))}.privacy h3{font-size:14px}.privacy p{color:#c7d2fe;font-size:12px;margin-top:6px}
+.btn{height:45px;border-radius:16px;padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-weight:900;font-size:13px;border:1px solid transparent;transition:.2s;min-width:0}.btn:active{transform:scale(.97)}.btn.primary{background:linear-gradient(135deg,var(--accent),#4f46e5);box-shadow:0 14px 34px rgba(124,58,237,.28)}.btn.success{background:linear-gradient(135deg,#22c55e,#059669);box-shadow:0 14px 30px rgba(34,197,94,.18)}.btn.danger{background:linear-gradient(135deg,#ef4444,#be123c);box-shadow:0 14px 30px rgba(239,68,68,.18)}.btn.ghost{background:rgba(255,255,255,.07);border-color:var(--line);color:#dce5ff}.btn.warn{background:linear-gradient(135deg,#f59e0b,#ea580c)}.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.btn-row.three{grid-template-columns:1fr 1fr 1fr}.btn[disabled]{opacity:.55;filter:grayscale(.4);pointer-events:none}
+.canvas{min-height:330px;border-radius:24px;border:1px solid rgba(124,58,237,.28);background:radial-gradient(circle at 20% 12%,rgba(124,58,237,.15),transparent 32%),radial-gradient(circle at 80% 90%,rgba(6,182,212,.11),transparent 34%),linear-gradient(180deg,rgba(18,25,46,.7),rgba(12,17,31,.74));position:relative;overflow:hidden;padding:16px;margin-bottom:12px}.canvas:before{content:"";position:absolute;inset:0;opacity:.45;background-image:radial-gradient(circle,rgba(255,255,255,.12) 1px,transparent 1px);background-size:22px 22px}.canvas-empty{height:296px;display:grid;place-items:center;text-align:center;color:var(--muted);position:relative}.canvas-empty .big{font-size:46px;opacity:.7}.nodes{position:relative;display:none;gap:10px;flex-direction:column}.node{display:flex;align-items:center;gap:10px;padding:11px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 30px rgba(0,0,0,.22);animation:nodeIn .28s ease both}.node:after{content:"";position:absolute}.node-ico{width:42px;height:42px;border-radius:15px;display:grid;place-items:center;flex-shrink:0;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 12px 22px rgba(124,58,237,.18)}.node-body{min-width:0;flex:1}.node-title{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.node-sub{font-size:10px;color:var(--muted);margin-top:2px}.arrow{height:20px;display:grid;place-items:center;color:rgba(255,255,255,.35);font-weight:900}@keyframes nodeIn{from{opacity:0;transform:translateX(-12px) scale(.98)}to{opacity:1;transform:none}}
+.list{display:grid;gap:9px}.item{padding:12px;border-radius:18px;background:rgba(255,255,255,.055);border:1px solid var(--line);display:flex;gap:10px;align-items:flex-start}.item-ico{width:38px;height:38px;border-radius:14px;display:grid;place-items:center;background:rgba(124,58,237,.17);flex-shrink:0}.item h4{font-size:13px}.item p{font-size:11px;color:var(--muted);margin-top:3px;word-break:break-word}.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:10px;margin-top:7px}.empty{padding:34px 16px;text-align:center;color:var(--muted)}.empty .big{font-size:40px;opacity:.55}.empty p{font-size:12px;margin-top:6px}
+.setting-card{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:20px;margin-bottom:10px;overflow:hidden}.setting-card summary{list-style:none;padding:14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:900}.setting-card summary::-webkit-details-marker{display:none}.setting-card summary small{color:var(--muted);font-weight:700}.setting-body{padding:0 14px 14px;display:grid;gap:10px}.field label{display:block;color:var(--muted);font-size:11px;font-weight:800;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);background:rgba(2,6,23,.45);border-radius:15px;padding:12px 13px;font-size:12px;transition:.2s}.field textarea{min-height:78px;resize:vertical}.field input:focus,.field textarea:focus{border-color:rgba(6,182,212,.55);box-shadow:0 0 0 4px rgba(6,182,212,.11)}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.hint{font-size:11px;line-height:1.8;color:var(--muted);background:rgba(255,255,255,.045);border:1px dashed rgba(255,255,255,.12);padding:10px;border-radius:15px}.creator-card{text-align:center;padding:22px}.avatar{width:84px;height:84px;margin:0 auto 12px;border-radius:28px;display:grid;place-items:center;font-size:38px;background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 18px 42px rgba(6,182,212,.2)}.creator-card h2{font-size:21px}.creator-card a{color:#bae6fd;text-decoration:none;font-weight:900}.creator-card p{color:var(--muted);margin-top:7px}
+.command-dock{position:absolute;left:0;right:0;bottom:0;z-index:38;padding:10px 12px calc(10px + var(--safe-bottom));background:linear-gradient(180deg,rgba(7,9,18,0),rgba(9,13,25,.84) 20%,rgba(9,13,25,.98));backdrop-filter:blur(18px)}.command-box{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.075);border:1px solid var(--line2);border-radius:22px;padding:8px;box-shadow:0 16px 50px rgba(0,0,0,.45)}.command-box input{flex:1;min-width:0;background:transparent;border:0;padding:0 6px;font-size:13px}.round{width:42px;height:42px;border-radius:16px;display:grid;place-items:center;flex-shrink:0;background:rgba(255,255,255,.08);border:1px solid var(--line)}.round.send{background:linear-gradient(135deg,var(--accent),var(--accent2));border:0}.round.recording{background:rgba(239,68,68,.22);color:#fecaca;animation:mic 1s infinite}@keyframes mic{50%{box-shadow:0 0 0 10px rgba(239,68,68,.08)}}.dock-hint{text-align:center;color:var(--muted);font-size:10px;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.toast{position:absolute;top:82px;left:50%;transform:translate(-50%,-12px);z-index:200;opacity:0;pointer-events:none;transition:.25s;background:rgba(15,23,42,.94);border:1px solid var(--line2);box-shadow:var(--shadow);border-radius:16px;padding:11px 14px;font-size:12px;font-weight:900;max-width:90%;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.success{border-color:rgba(34,197,94,.35);color:#bbf7d0}.toast.error{border-color:rgba(239,68,68,.35);color:#fecaca}.modal-bg{position:absolute;inset:0;z-index:120;background:rgba(0,0,0,.58);backdrop-filter:blur(8px);display:none;align-items:flex-end}.modal-bg.show{display:flex}.modal{width:100%;max-height:86%;overflow:auto;background:linear-gradient(180deg,#121a31,#090d19);border-top:1px solid var(--line2);border-radius:26px 26px 0 0;padding:12px 14px calc(18px + var(--safe-bottom));box-shadow:0 -30px 90px rgba(0,0,0,.45);animation:sheet .28s ease}.handle{width:44px;height:5px;background:rgba(255,255,255,.18);border-radius:99px;margin:0 auto 14px}@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}.modal-title{text-align:center;font-size:16px;font-weight:900;margin-bottom:14px}.badge{position:absolute;top:6px;left:7px;min-width:18px;height:18px;border-radius:99px;background:var(--red);display:none;place-items:center;font-size:10px;font-weight:900}.notif-btn{position:relative}@media(max-width:370px){.grid3{gap:7px}.btn{font-size:12px;padding:0 10px}.btn-row.three{grid-template-columns:1fr}.field-row{grid-template-columns:1fr}.hero h2{font-size:19px}}
+/* ===== بوم جریان نسخه ۲: افزودن/ویرایش گره، شاخه‌های شرطی، وضعیت اجرا ===== */
+.canvas-toolbar{display:flex;gap:8px;margin-bottom:10px}
+.canvas-toolbar .btn{flex:1;height:40px;font-size:12px}
+.node-wrap{position:relative;display:flex;flex-direction:column;gap:0}
+.node-row{display:flex;align-items:center;gap:10px;padding:11px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.045));border:1px solid rgba(255,255,255,.12);box-shadow:0 12px 30px rgba(0,0,0,.22);animation:nodeIn .28s ease both;position:relative;cursor:pointer;transition:.15s}
+.node-row:active{transform:scale(.985)}
+.node-row.status-success{border-color:rgba(34,197,94,.45)}
+.node-row.status-error{border-color:rgba(239,68,68,.5);background:linear-gradient(180deg,rgba(239,68,68,.13),rgba(255,255,255,.045))}
+.node-status-dot{position:absolute;top:8px;left:8px;width:9px;height:9px;border-radius:50%;box-shadow:0 0 8px currentColor}
+.node-status-dot.success{background:var(--green);color:var(--green)}
+.node-status-dot.error{background:var(--red);color:var(--red)}
+.node-msg{font-size:10px;color:var(--muted);margin-top:3px;white-space:normal;word-break:break-word}
+.node-actions{display:flex;gap:6px;flex-shrink:0}
+.node-mini-btn{width:30px;height:30px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid var(--line);display:grid;place-items:center;font-size:13px;flex-shrink:0}
+.node-mini-btn.danger{background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.3)}
+.branch-block{margin-inline-start:26px;border-inline-start:2px dashed rgba(255,255,255,.16);padding-inline-start:14px;margin-top:8px;display:flex;flex-direction:column;gap:8px}
+.branch-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:900;padding:4px 10px;border-radius:99px;margin-bottom:2px;width:fit-content}
+.branch-tag.true{background:rgba(34,197,94,.15);color:#bbf7d0;border:1px solid rgba(34,197,94,.3)}
+.branch-tag.false{background:rgba(239,68,68,.15);color:#fecaca;border:1px solid rgba(239,68,68,.3)}
+.branch-tag.other{background:rgba(124,58,237,.15);color:#ddd6fe;border:1px solid rgba(124,58,237,.3)}
+.add-here-btn{height:34px;border-radius:12px;background:rgba(255,255,255,.06);border:1px dashed var(--line2);color:var(--muted);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:2px}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.type-btn{padding:12px 10px;border-radius:16px;background:rgba(255,255,255,.055);border:1px solid var(--line);text-align:right;display:flex;align-items:center;gap:9px}
+.type-btn span.ico{font-size:18px}
+.type-btn b{font-size:12px;display:block}
+.type-cat-title{font-size:11px;color:var(--muted);font-weight:900;margin:14px 2px 4px;text-transform:uppercase}
+.webhook-box{display:flex;align-items:center;gap:8px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.3);border-radius:14px;padding:10px 12px;margin-top:10px;font-size:11px;word-break:break-all}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="topbar">
+    <button class="icon-btn" onclick="openDrawer()" aria-label="منو">☰</button>
+    <div class="brand">
+      <div class="logo"><span>🔄</span></div>
+      <div>
+        <h1>جریان ایرانی Pro</h1>
+        <p>اتوماسیون حرفه‌ای انتقال پیام</p>
+      </div>
+    </div>
+    <button class="icon-btn notif-btn" onclick="showModal('notifModal')" aria-label="اعلان‌ها">🔔<span class="badge" id="notifBadge">0</span></button>
+    <div class="status-chip" id="statusChip"><i></i><span id="statusText">آماده</span></div>
+  </header>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer-head">
+      <div class="drawer-title"><div class="logo" style="width:42px;height:42px;border-radius:15px"><span>🔄</span></div><div><b>جریان ایرانی</b><small>الهام‌گرفته از n8n</small></div></div>
+      <button class="icon-btn" onclick="closeDrawer()">×</button>
+    </div>
+    <nav class="menu" id="menu">
+      <button class="active" data-sec="dashboard" onclick="switchSection('dashboard')"><span class="m-ico">🏠</span><span>داشبورد</span></button>
+      <button data-sec="builder" onclick="switchSection('builder')"><span class="m-ico">🧩</span><span>بوم جریان</span></button>
+      <button data-sec="flows" onclick="switchSection('flows')"><span class="m-ico">💾</span><span>جریان‌های ذخیره‌شده</span></button>
+      <button data-sec="settings" onclick="switchSection('settings')"><span class="m-ico">⚙️</span><span>تنظیمات محرمانه</span></button>
+      <button data-sec="history" onclick="switchSection('history')"><span class="m-ico">📜</span><span>تاریخچه موقت</span></button>
+      <button data-sec="creator" onclick="switchSection('creator')"><span class="m-ico">👤</span><span>سازنده</span></button>
+    </nav>
+    <div class="maker-mini">
+      <small>سازنده</small>
+      <div style="font-weight:900;margin-top:5px">آیدین سعیدی</div>
+      <div style="direction:ltr;text-align:right;margin-top:4px;color:#bae6fd;font-weight:900">09398588897</div>
+    </div>
+  </aside>
+
+  <main class="content" id="main">
+    <section class="screen active" id="sec-dashboard">
+      <div class="card hero">
+        <h2>پیام‌ها را مثل یک جریان هوشمند بین پیام‌رسان‌ها جابه‌جا کن.</h2>
+        <p>فرمان بده، بوم جریان ساخته می‌شود، سپس با «فعال‌سازی» شنونده‌ها روشن می‌شوند. تنظیمات و توکن‌ها فقط روی گوشی شما ذخیره می‌شوند.</p>
+        <div class="hero-actions">
+          <button class="btn success" onclick="activateFlow()">▶ فعال‌سازی</button>
+          <button class="btn danger" onclick="stopSystem()">⏹ توقف</button>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="stat blue"><b id="statTotal">۰</b><span>کل عملیات موقت</span></div>
+        <div class="stat green"><b id="statSuccess">۰</b><span>موفق</span></div>
+        <div class="stat red"><b id="statFailed">۰</b><span>خطا</span></div>
+      </div>
+
+      <div class="card privacy" style="margin-top:12px">
+        <h3>🛡️ حالت حریم خصوصی فعال است</h3>
+        <p>توکن‌ها، چت‌آیدی‌ها و جریان‌های ذخیره‌شده روی سرور ذخیره نمی‌شوند؛ فقط در حافظه مرورگر همین گوشی نگه‌داری می‌شوند. سرور برای اجرای زنده فقط از RAM استفاده می‌کند.</p>
+      </div>
+
+      <div class="section-title">🌐 پلتفرم‌های آماده</div>
+      <div class="platforms" id="platformChips">
+        <span class="chip tg"><i></i>تلگرام</span><span class="chip bale"><i></i>بله</span><span class="chip rubika"><i></i>روبیکا</span><span class="chip soroush"><i></i>سروش</span><span class="chip gap"><i></i>گپ</span><span class="chip ig"><i></i>اینستاگرام</span><span class="chip mail"><i></i>ایمیل</span>
+      </div>
+
+      <div class="section-title">⚙️ وضعیت اجرا</div>
+      <div class="card kv">
+        <div class="row"><small>وضعیت</small><b id="sysStatus">آماده</b></div>
+        <div class="row"><small>شنونده‌های فعال</small><b id="sysListeners">۰</b></div>
+        <div class="row"><small>حافظه ویدئوهای روبیکا</small><b id="sysMedia">۰</b></div>
+        <div class="row"><small>آخرین خطا</small><b id="sysError" style="color:var(--muted)">—</b></div>
+      </div>
+    </section>
+
+    <section class="screen" id="sec-builder">
+      <div class="section-title">🧩 بوم جریان</div>
+      <div class="canvas-toolbar">
+        <button class="btn ghost" onclick="openAddNodeModal(null,null)">➕ افزودن گره</button>
+        <button class="btn ghost" onclick="runOnce()">🧪 اجرای تستی</button>
+      </div>
+      <div class="canvas" id="canvas">
+        <div class="canvas-empty" id="canvasEmpty"><div><div class="big">🎛️</div><p>هنوز جریانی ساخته نشده است.<br>پایین صفحه فرمان بنویسید یا از «➕ افزودن گره» شروع کنید.</p></div></div>
+        <div class="nodes" id="flowNodes" style="display:none"></div>
+      </div>
+      <div class="webhook-box" id="webhookBox" style="display:none"></div>
+      <div class="btn-row three">
+        <button class="btn success" id="activateBtn" onclick="activateFlow()">▶ فعال کردن</button>
+        <button class="btn danger" onclick="stopSystem()">⏹ توقف</button>
+        <button class="btn primary" onclick="openSaveModal()">💾 ذخیره جریان</button>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <div class="row"><div><b>نکته روبیکا</b><p style="font-size:11px;color:var(--muted);margin-top:4px">برای ویدئوهای مقصد روبیکا، اپ فایل را موقت ذخیره می‌کند و لینک مستقیم یک‌بارمصرف می‌فرستد؛ پس از دانلود، فایل حذف می‌شود.</p></div><span style="font-size:28px">🎬</span></div>
+      </div>
+    </section>
+
+    <section class="screen" id="sec-flows">
+      <div class="section-title">💾 جریان‌های ذخیره‌شده روی گوشی</div>
+      <div class="list" id="savedWorkflows"></div>
+    </section>
+
+    <section class="screen" id="sec-settings">
+      <div class="section-title">⚙️ تنظیمات محرمانه</div>
+      <div class="card privacy">
+        <h3>🔐 ذخیره فقط روی همین دستگاه</h3>
+        <p>با زدن «ذخیره تنظیمات»، اطلاعات در localStorage مرورگر گوشی ذخیره می‌شود و هیچ endpoint ذخیره‌سازی سرور فراخوانی نمی‌شود.</p>
+      </div>
+
+      <details class="setting-card" open><summary>✈️ تلگرام <small>Telegram Bot</small></summary><div class="setting-body">
+        <div class="field"><label>توکن ربات</label><input id="set_tg_token" autocomplete="off" placeholder="123456:ABC..." /></div>
+        <div class="field"><label>Chat ID مقصد</label><input id="set_tg_chat" autocomplete="off" placeholder="-100123456789" /></div>
+        <button class="btn ghost" onclick="testPlatform('telegram')">🧪 تست اتصال تلگرام</button>
+      </div></details>
+
+      <details class="setting-card"><summary>💬 بله <small>Bale</small></summary><div class="setting-body">
+        <div class="field"><label>توکن ربات</label><input id="set_bale_token" autocomplete="off" /></div>
+        <div class="field"><label>Chat ID مقصد</label><input id="set_bale_chat" autocomplete="off" /></div>
+      </div></details>
+
+      <details class="setting-card" open><summary>🔴 روبیکا <small>Rubika + لینک ویدئو</small></summary><div class="setting-body">
+        <div class="field"><label>توکن روبیکا</label><input id="set_rubika_token" autocomplete="off" /></div>
+        <div class="field"><label>Chat ID مقصد</label><input id="set_rubika_chat" autocomplete="off" /></div>
+        <div class="field"><label>آدرس عمومی اپ برای لینک دانلود مستقیم</label><input id="set_public_base_url" autocomplete="off" placeholder="https://your-domain.com" /></div>
+        <div class="hint">اگر برنامه روی localhost اجرا شود، لینک دانلود برای مخاطب بیرونی قابل دسترس نیست. برای روبیکا یک دامنه HTTPS یا تونل امن وارد کنید. فایل ویدئو پس از اولین دانلود حذف می‌شود.</div>
+      </div></details>
+
+      <details class="setting-card"><summary>🟠 سروش <small>Soroush</small></summary><div class="setting-body">
+        <div class="field"><label>توکن</label><input id="set_soroush_token" autocomplete="off" /></div>
+        <div class="field"><label>Chat ID مقصد</label><input id="set_soroush_chat" autocomplete="off" /></div>
+      </div></details>
+
+      <details class="setting-card"><summary>🔵 گپ <small>Gap</small></summary><div class="setting-body">
+        <div class="field"><label>توکن</label><input id="set_gap_token" autocomplete="off" /></div>
+        <div class="field"><label>Chat ID مقصد</label><input id="set_gap_chat" autocomplete="off" /></div>
+      </div></details>
+
+      <details class="setting-card"><summary>📸 اینستاگرام <small>Graph API</small></summary><div class="setting-body">
+        <div class="field"><label>Access Token</label><input id="set_ig_access_token" autocomplete="off" /></div>
+        <div class="field"><label>Business Account ID</label><input id="set_ig_business_id" autocomplete="off" /></div>
+      </div></details>
+
+      <details class="setting-card"><summary>📧 ایمیل <small>SMTP / IMAP</small></summary><div class="setting-body">
+        <div class="field-row"><div class="field"><label>SMTP Host</label><input id="set_email_host" placeholder="smtp.gmail.com" /></div><div class="field"><label>IMAP Host</label><input id="set_email_imap" placeholder="imap.gmail.com" /></div></div>
+        <div class="field"><label>ایمیل حساب</label><input id="set_email_user" type="email" autocomplete="off" /></div>
+        <div class="field"><label>رمز / App Password</label><input id="set_email_pass" type="password" autocomplete="off" /></div>
+      </div></details>
+
+      <div class="btn-row">
+        <button class="btn primary" onclick="saveSettings()">💾 ذخیره روی گوشی</button>
+        <button class="btn ghost" onclick="clearLocalData()">🧹 پاک‌سازی محلی</button>
+      </div>
+    </section>
+
+    <section class="screen" id="sec-history">
+      <div class="section-title">📜 تاریخچه موقت RAM</div>
+      <div class="list" id="historyList"></div>
+    </section>
+
+    <section class="screen" id="sec-creator">
+      <div class="card creator-card">
+        <div class="avatar">👤</div>
+        <h2>آیدین سعیدی</h2>
+        <p>سازنده اپلیکیشن جریان ایرانی Pro</p>
+        <p style="direction:ltr"><a href="tel:09398588897">09398588897</a></p>
+        <button class="btn primary" style="margin-top:16px;width:100%" onclick="copyText('09398588897')">📋 کپی شماره تماس</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="command-dock">
+    <div class="command-box">
+      <button class="round" id="micBtn" onclick="toggleMic()" title="فرمان صوتی">🎤</button>
+      <input id="cmdInput" placeholder="فرمان جریان؛ مثال: از تلگرام به روبیکا و بله" onkeydown="if(event.key==='Enter')generateAndRun()" />
+      <button class="round send" onclick="generateAndRun()" title="ساخت جریان">🧩</button>
+    </div>
+    <div class="dock-hint">برای اجرا: جریان را بسازید، سپس «فعال کردن» را بزنید.</div>
+  </div>
+
+  <div class="modal-bg" id="saveModal">
+    <div class="modal"><div class="handle"></div><div class="modal-title">💾 ذخیره جریان روی گوشی</div>
+      <div class="field"><label>نام جریان</label><input id="wfName" placeholder="مثلاً پل تلگرام به روبیکا" /></div>
+      <div class="field" style="margin-top:10px"><label>توضیحات</label><input id="wfDesc" placeholder="اختیاری" /></div>
+      <button class="btn primary" style="width:100%;margin-top:12px" onclick="saveWorkflow()">ذخیره جریان</button>
+      <button class="btn ghost" style="width:100%;margin-top:8px" onclick="hideModal('saveModal')">انصراف</button>
+    </div>
+  </div>
+
+  <div class="modal-bg" id="notifModal">
+    <div class="modal"><div class="handle"></div><div class="modal-title">🔔 اعلان‌ها</div><div class="list" id="notifList"></div><button class="btn ghost" style="width:100%;margin-top:12px" onclick="hideModal('notifModal')">بستن</button></div>
+  </div>
+
+  <div class="modal-bg" id="addNodeModal">
+    <div class="modal"><div class="handle"></div><div class="modal-title">➕ افزودن گره</div>
+      <div id="addNodeBody"></div>
+      <button class="btn ghost" style="width:100%;margin-top:12px" onclick="hideModal('addNodeModal')">انصراف</button>
+    </div>
+  </div>
+
+  <div class="modal-bg" id="editNodeModal">
+    <div class="modal"><div class="handle"></div><div class="modal-title" id="editNodeTitle">✏️ ویرایش گره</div>
+      <div id="editNodeBody" style="display:grid;gap:10px"></div>
+      <div class="btn-row" style="margin-top:12px">
+        <button class="btn primary" onclick="saveNodeEdit()">ذخیره</button>
+        <button class="btn ghost" onclick="hideModal('editNodeModal')">انصراف</button>
+      </div>
+      <button class="btn danger" style="width:100%;margin-top:8px" onclick="deleteNodeFromEditor()">🗑 حذف این گره</button>
+    </div>
+  </div>
+
+  <div class="modal-bg" id="resultsModal">
+    <div class="modal"><div class="handle"></div><div class="modal-title">🧪 نتیجه اجرای تستی</div>
+      <div class="list" id="resultsList"></div>
+      <button class="btn ghost" style="width:100%;margin-top:12px" onclick="hideModal('resultsModal')">بستن</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+const STORE_SETTINGS='iran_flow_pro_settings_v1';
+const STORE_FLOWS='iran_flow_pro_workflows_v1';
+const FIELD_KEYS=['tg_token','tg_chat','bale_token','bale_chat','rubika_token','rubika_chat','soroush_token','soroush_chat','gap_token','gap_chat','ig_access_token','ig_business_id','email_host','email_imap','email_user','email_pass','public_base_url'];
+const PLATFORM_META={telegram:{name:'تلگرام',icon:'✈️',cls:'tg',token:['tg_token'],send:['tg_token','tg_chat']},bale:{name:'بله',icon:'💬',cls:'bale',token:['bale_token'],send:['bale_token','bale_chat']},rubika:{name:'روبیکا',icon:'🔴',cls:'rubika',token:['rubika_token'],send:['rubika_token','rubika_chat']},soroush:{name:'سروش',icon:'🟠',cls:'soroush',token:['soroush_token'],send:['soroush_token','soroush_chat']},gap:{name:'گپ',icon:'🔵',cls:'gap',token:['gap_token'],send:['gap_token','gap_chat']},instagram:{name:'اینستاگرام',icon:'📸',cls:'ig',token:['ig_access_token','ig_business_id'],send:['ig_access_token','ig_business_id']},email:{name:'ایمیل',icon:'📧',cls:'mail',token:['email_user','email_pass','email_imap'],send:['email_host','email_user','email_pass']}};
+const state={currentWorkflow:null,settings:{},recording:false,recognition:null,micTimeout:null,isListenerRunning:false,lastResults:{},addNodeTarget:null,editingNodeId:null};
+const $=id=>document.getElementById(id);
+const $$=sel=>Array.from(document.querySelectorAll(sel));
+function fa(n){try{return Number(n||0).toLocaleString('fa-IR')}catch{return n}}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtTime(iso){if(!iso)return'';try{return new Date(iso).toLocaleString('fa-IR',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch{return iso}}
+function toast(msg,type='success'){const t=$('toast');t.textContent=msg;t.className='toast show '+type;clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),3200)}
+function showModal(id){$(id).classList.add('show')}function hideModal(id){$(id).classList.remove('show')}$$('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
+function openDrawer(){$('drawer').classList.add('show');$('drawerBackdrop').classList.add('show')}function closeDrawer(){$('drawer').classList.remove('show');$('drawerBackdrop').classList.remove('show')}
+function switchSection(name){$$('.screen').forEach(s=>s.classList.remove('active'));$('sec-'+name).classList.add('active');$$('#menu button').forEach(b=>b.classList.toggle('active',b.dataset.sec===name));$('main').scrollTop=0;closeDrawer();if(name==='flows')loadSavedWorkflows();if(name==='history')loadHistory();if(name==='settings')loadSettings();}
+async function api(path,opts={}){try{const res=await fetch(path,{method:opts.method||'GET',headers:opts.body?{'Content-Type':'application/json'}:{},body:opts.body?JSON.stringify(opts.body):undefined});if(!res.ok){let txt=await res.text();throw new Error('HTTP '+res.status+' '+txt)}return await res.json()}catch(e){console.error(e);return{success:false,detail:e.message}}}
+function readLocal(key,def){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(def))}catch{return def}}
+function writeLocal(key,val){localStorage.setItem(key,JSON.stringify(val))}
+function collectSettingsFromDOM(){const s={};FIELD_KEYS.forEach(k=>{const el=$('set_'+k);s[k]=el?String(el.value||'').trim():String(state.settings[k]||'').trim()});return s}
+function loadSettings(){state.settings=readLocal(STORE_SETTINGS,{});FIELD_KEYS.forEach(k=>{const el=$('set_'+k);if(el)el.value=state.settings[k]||''});updatePlatformChips(state.settings);return state.settings}
+function saveSettings(){state.settings=collectSettingsFromDOM();writeLocal(STORE_SETTINGS,state.settings);updatePlatformChips(state.settings);toast('✅ تنظیمات فقط روی گوشی ذخیره شد')}
+function clearLocalData(){if(!confirm('همه تنظیمات و جریان‌های ذخیره‌شده روی این مرورگر پاک شوند؟'))return;localStorage.removeItem(STORE_SETTINGS);localStorage.removeItem(STORE_FLOWS);state.settings={};FIELD_KEYS.forEach(k=>{const el=$('set_'+k);if(el)el.value=''});updatePlatformChips({});loadSavedWorkflows();toast('🧹 داده‌های محلی پاک شد')}
+function updatePlatformChips(s){const filled={telegram:['tg_token','tg_chat'],bale:['bale_token','bale_chat'],rubika:['rubika_token','rubika_chat'],soroush:['soroush_token','soroush_chat'],gap:['gap_token','gap_chat'],instagram:['ig_access_token','ig_business_id'],email:['email_user','email_pass']};$$('#platformChips .chip').forEach(ch=>{const key=Object.keys(PLATFORM_META).find(k=>ch.classList.contains(PLATFORM_META[k].cls));if(!key)return;ch.classList.toggle('on',filled[key].every(f=>s[f]&&String(s[f]).trim()))})}
+async function refreshStats(){const d=await api('/api/stats');if(d.total!==undefined){$('statTotal').textContent=fa(d.total);$('statSuccess').textContent=fa(d.success);$('statFailed').textContent=fa(d.failed);}}
+async function refreshHealth(){const h=await api('/health');if(h.ok!==undefined){state.isListenerRunning=!!h.running;updateStatus();$('sysListeners').textContent=fa(h.listeners||0);$('sysMedia').textContent=fa(h.temp_media||0);$('sysError').textContent=h.last_error||'—';$('sysError').style.color=h.last_error?'var(--red)':'var(--muted)';}}
+function updateStatus(){const chip=$('statusChip'),txt=$('statusText'),btn=$('activateBtn');if(state.isListenerRunning){chip.classList.add('on');txt.textContent='فعال';$('sysStatus').textContent='🟢 فعال';if(btn){btn.textContent='🟢 فعال است';btn.disabled=true}}else{chip.classList.remove('on');txt.textContent='آماده';$('sysStatus').textContent='⚪ آماده';if(btn){btn.textContent='▶ فعال کردن';btn.disabled=false}}}
+async function refreshNotifications(){const d=await api('/api/notifications?limit=20');const list=d.notifications||[];const unread=list.filter(n=>!n.read).length;const b=$('notifBadge');if(unread){b.style.display='grid';b.textContent=fa(unread)}else b.style.display='none';$('notifList').innerHTML=list.length?list.map(n=>`<div class="item"><div class="item-ico">🔔</div><div><h4>${escapeHtml(n.title)}</h4><p>${escapeHtml(n.message)}</p><div class="meta"><span>${fmtTime(n.timestamp)}</span></div></div></div>`).join(''):`<div class="empty"><div class="big">🔕</div><p>اعلانی نیست</p></div>`}
+async function loadHistory(){const d=await api('/api/history?limit=60');const list=d.history||[];$('historyList').innerHTML=list.length?list.map(h=>{const ok=h.status==='موفق';const er=h.status==='خطا';return `<div class="item"><div class="item-ico" style="background:${ok?'rgba(34,197,94,.16)':er?'rgba(239,68,68,.16)':'rgba(124,58,237,.16)'}">${ok?'✅':er?'❌':'ℹ️'}</div><div><h4>${escapeHtml(h.action)}</h4><p>${escapeHtml(h.details||'')}</p><div class="meta"><span>${fmtTime(h.timestamp)}</span><span>${escapeHtml(h.status)}</span></div></div></div>`}).join(''):`<div class="empty"><div class="big">📭</div><p>تاریخچه‌ای وجود ندارد</p></div>`}
+async function generateAndRun(){const text=$('cmdInput').value.trim();if(!text){toast('⚠️ فرمان جریان را وارد کنید','error');return null}toast('🧠 در حال تحلیل فرمان...');const r=await api('/generate-workflow',{method:'POST',body:{text}});if(!r.success||!r.workflow){toast('❌ خطا در ساخت جریان: '+(r.detail||''),'error');return null}state.currentWorkflow=r.workflow;state.lastResults={};showWebhookBox(null);renderWorkflow(r.workflow);switchSection('builder');toast('✅ جریان ساخته شد');return r.workflow}
+// ===== کاتالوگ انواع گره (شبیه‌سازی پالت گره‌های n8n) =====
+const NODE_CATALOG={
+  manual_trigger:{cat:'trigger',label:'ورودی دستی',icon:'📥',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  webhook_trigger:{cat:'trigger',label:'وب‌هوک (Webhook)',icon:'🌐',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  timer:{cat:'trigger',label:'تایمر (زمان‌بندی)',icon:'⏱',color:'linear-gradient(135deg,#f59e0b,#ea580c)',fields:[{key:'interval',type:'number',label:'فاصله اجرا (ثانیه)',default:3600}]},
+  telegram_trigger:{cat:'trigger',label:'دریافت از تلگرام',icon:'✈️',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  bale_trigger:{cat:'trigger',label:'دریافت از بله',icon:'💬',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  rubika_trigger:{cat:'trigger',label:'دریافت از روبیکا',icon:'🔴',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  soroush_trigger:{cat:'trigger',label:'دریافت از سروش',icon:'🟠',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  gap_trigger:{cat:'trigger',label:'دریافت از گپ',icon:'🔵',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  email_trigger:{cat:'trigger',label:'ایمیل جدید (IMAP)',icon:'📧',color:'linear-gradient(135deg,#0ea5e9,#2563eb)'},
+  send_telegram:{cat:'action',label:'ارسال به تلگرام',icon:'✈️',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'caption',type:'text',label:'متن/کپشن (اختیاری، {{input_text}} مجاز است)'}]},
+  send_bale:{cat:'action',label:'ارسال به بله',icon:'💬',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'caption',type:'text',label:'متن/کپشن (اختیاری)'}]},
+  send_rubika:{cat:'action',label:'ارسال به روبیکا',icon:'🔴',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'caption',type:'text',label:'متن/کپشن (اختیاری)'}]},
+  send_soroush:{cat:'action',label:'ارسال به سروش',icon:'🟠',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'caption',type:'text',label:'متن/کپشن (اختیاری)'}]},
+  send_gap:{cat:'action',label:'ارسال به گپ',icon:'🔵',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'caption',type:'text',label:'متن/کپشن (اختیاری)'}]},
+  send_instagram:{cat:'action',label:'ارسال به اینستاگرام',icon:'📸',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'caption',type:'text',label:'متن/کپشن (اختیاری)'}]},
+  send_email:{cat:'action',label:'ارسال ایمیل',icon:'📧',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'subject',type:'text',label:'موضوع ایمیل'}]},
+  http_request:{cat:'action',label:'درخواست HTTP',icon:'🌐',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'method',type:'select',label:'متد',options:['GET','POST','PUT','DELETE'],default:'GET'},{key:'url',type:'text',label:'آدرس URL'},{key:'body',type:'textarea',label:'بدنه JSON (اختیاری، برای POST/PUT)'}]},
+  delay:{cat:'action',label:'تاخیر',icon:'⏳',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'seconds',type:'number',label:'مدت تاخیر (ثانیه)',default:2}]},
+  log:{cat:'action',label:'ثبت لاگ',icon:'🧠',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'message',type:'text',label:'متن لاگ ({{input_text}} مجاز است)'}]},
+  set_value:{cat:'action',label:'تنظیم متغیر',icon:'🧮',color:'linear-gradient(135deg,#8b5cf6,#ec4899)',fields:[{key:'key',type:'text',label:'نام متغیر'},{key:'value',type:'text',label:'مقدار ({{input_text}} مجاز است)'}]},
+  condition:{cat:'logic',label:'شرط (IF)',icon:'❓',color:'linear-gradient(135deg,#f59e0b,#d97706)',branches:['true','false'],fields:[{key:'operator',type:'select',label:'عملگر',options:['contains','not_contains','equals','not_equals','regex','greater_than','less_than'],default:'contains'},{key:'value',type:'text',label:'مقدار مقایسه'}]},
+  switch:{cat:'logic',label:'سوییچ (چندمسیره)',icon:'🔀',color:'linear-gradient(135deg,#f59e0b,#d97706)',fields:[{key:'cases_raw',type:'textarea',label:'حالت‌ها؛ هر خط: مقدار=برچسب مسیر'}]},
+  merge:{cat:'logic',label:'ادغام مسیرها',icon:'🔗',color:'linear-gradient(135deg,#f59e0b,#d97706)'},
+};
+const CAT_LABELS={trigger:'⚡ محرک‌ها (Trigger)',action:'📤 عملیات (Action)',logic:'🔀 منطق (Logic)'};
+const OPERATOR_LABELS={contains:'شامل باشد',not_contains:'شامل نباشد',equals:'برابر باشد',not_equals:'برابر نباشد',regex:'الگوی Regex',greater_than:'بزرگ‌تر باشد',less_than:'کوچک‌تر باشد'};
+const BRANCH_LABELS={true:'✅ بله',false:'⛔ خیر'};
+
+function ensureWorkflow(){if(!state.currentWorkflow)state.currentWorkflow={nodes:[{id:'1',type:'start',data:{label:'🚀 شروع'},position:{x:40,y:40}}],edges:[],meta:{}};return state.currentWorkflow}
+function nextNodeId(wf){const ids=(wf.nodes||[]).map(n=>parseInt(n.id,10)).filter(n=>!isNaN(n));return String((ids.length?Math.max(...ids):0)+1)}
+function graphOut(wf){const out={};(wf.edges||[]).forEach(e=>{(out[e.source]=out[e.source]||[]).push({target:e.target,branch:(e.data&&e.data.branch)||null})});return out}
+function findRootId(wf){const hasIncoming=new Set((wf.edges||[]).map(e=>e.target));const root=(wf.nodes||[]).find(n=>!hasIncoming.has(n.id));return root?root.id:(wf.nodes[0]&&wf.nodes[0].id)}
+function nodeVisual(type){const meta=NODE_CATALOG[type];if(meta)return{icon:meta.icon,color:meta.color,label:meta.label};if(type==='start')return{icon:'🚀',color:'linear-gradient(135deg,#22c55e,#059669)',label:'شروع'};return{icon:'⚙️',color:'linear-gradient(135deg,var(--accent),var(--accent2))',label:type}}
+
+function renderWorkflow(wf){
+  const nodes=wf?.nodes||[];
+  if(!nodes.length){$('canvasEmpty').style.display='grid';$('flowNodes').style.display='none';$('webhookBox').style.display='none';return}
+  $('canvasEmpty').style.display='none';$('flowNodes').style.display='flex';
+  const nodeMap={};nodes.forEach(n=>nodeMap[n.id]=n);
+  const out=graphOut(wf);
+  const visited=new Set();
+  const rootId=findRootId(wf);
+  let animIdx=0;
+
+  function nodeRowHtml(n){
+    const v=nodeVisual(n.type);
+    const res=(state.lastResults||{})[n.id];
+    const statusClass=res?(res.status==='error'?'status-error':'status-success'):'';
+    const dot=res?`<div class="node-status-dot ${res.status==='error'?'error':'success'}"></div>`:'';
+    const msg=res&&res.message?`<div class="node-msg">${escapeHtml(res.message)}</div>`:'';
+    const isBranching=n.type==='condition'||n.type==='switch';
+    animIdx++;
+    return `<div class="node-row ${statusClass}" style="animation-delay:${animIdx*45}ms" onclick="editNode('${n.id}')">
+      ${dot}
+      <div class="node-ico" style="background:${v.color}">${v.icon}</div>
+      <div class="node-body"><div class="node-title">${escapeHtml((n.data&&n.data.label)||v.label)}</div><div class="node-sub">${escapeHtml(v.label)}</div>${msg}</div>
+      <div class="node-actions" onclick="event.stopPropagation()">
+        ${isBranching?'':`<button class="node-mini-btn" title="افزودن گره بعدی" onclick="openAddNodeModal('${n.id}',null)">➕</button>`}
+      </div>
+    </div>`;
+  }
+
+  function walk(nodeId,depth){
+    if(visited.has(nodeId)||!nodeMap[nodeId])return'';
+    visited.add(nodeId);
+    const node=nodeMap[nodeId];
+    let html=nodeRowHtml(node);
+    const children=out[nodeId]||[];
+    const catalogEntry=NODE_CATALOG[node.type];
+
+    if(catalogEntry && catalogEntry.branches){
+      // گره شرطی: هر شاخه (true/false) به‌صورت بلوک تورفته و برچسب‌دار نمایش داده می‌شود
+      catalogEntry.branches.forEach(branch=>{
+        const edge=children.find(c=>c.branch===branch);
+        const tagClass=branch==='true'?'true':(branch==='false'?'false':'other');
+        html+=`<div class="branch-block"><span class="branch-tag ${tagClass}">${escapeHtml(BRANCH_LABELS[branch]||branch)}</span>`;
+        if(edge){html+=walk(edge.target,depth+1)}
+        else{html+=`<button class="add-here-btn" onclick="event.stopPropagation();openAddNodeModal('${nodeId}','${branch}')">➕ افزودن گره در این شاخه</button>`}
+        html+='</div>';
+      });
+    } else if(node.type==='switch'){
+      const cases=(node.data&&node.data.cases)||[];
+      const labels=[...cases.map(c=>c.label||c.value),'default'];
+      labels.forEach(lab=>{
+        const edge=children.find(c=>c.branch===lab);
+        html+=`<div class="branch-block"><span class="branch-tag other">${escapeHtml(lab)}</span>`;
+        if(edge){html+=walk(edge.target,depth+1)}
+        else{html+=`<button class="add-here-btn" onclick="event.stopPropagation();openAddNodeModal('${nodeId}','${lab}')">➕ افزودن گره در این مسیر</button>`}
+        html+='</div>';
+      });
+    } else {
+      // مسیر خطی/فن‌اوت ساده: همه‌ی فرزندان بدون برچسب شاخه، به‌ترتیب
+      const plain=children.filter(c=>!c.branch);
+      if(plain.length){
+        plain.forEach(c=>{html+='<div class="arrow">↓</div>'+walk(c.target,depth)});
+      }
+    }
+    return html;
+  }
+
+  let html=rootId?walk(rootId,0):'';
+  // هر گره‌ای که در گراف هست ولی به آن نرسیدیم (ورودی/خروجی جدا) هم نمایش داده شود
+  nodes.forEach(n=>{if(!visited.has(n.id)){html+='<div class="arrow">↓</div>'+walk(n.id,0)}});
+  $('flowNodes').innerHTML=html;
+}
+
+function workflowMissingSettings(wf,s){const missing=[];(wf.nodes||[]).forEach(n=>{const t=n.type||'';if(t.endsWith('_trigger')&&t!=='manual_trigger'&&t!=='webhook_trigger'){const p=t.replace('_trigger','');(PLATFORM_META[p]?.token||[]).forEach(f=>{if(!s[f])missing.push(`${PLATFORM_META[p].name}: ${f}`)})}if(t.startsWith('send_')){const p=t.replace('send_','');(PLATFORM_META[p]?.send||[]).forEach(f=>{if(!s[f])missing.push(`${PLATFORM_META[p].name}: ${f}`)})}});return [...new Set(missing)]}
+
+function showWebhookBox(url){const box=$('webhookBox');if(!url){box.style.display='none';return}box.style.display='flex';box.innerHTML=`<span>🌐</span><span style="flex:1" dir="ltr">${escapeHtml(url)}</span><button class="node-mini-btn" onclick="copyText('${url}')">📋</button>`}
+
+async function activateFlow(){if(!state.currentWorkflow){const wf=await generateAndRun();if(!wf)return}const settings=collectSettingsFromDOM();if(!settings.public_base_url)settings.public_base_url=(location.protocol.startsWith('http')?location.origin:'');const missing=workflowMissingSettings(state.currentWorkflow,settings);if(missing.length){toast('❌ تنظیمات ناقص: '+missing.slice(0,3).join('، ')+(missing.length>3?' ...':''),'error');switchSection('settings');return}toast('▶ در حال فعال‌سازی جریان...');const r=await api('/execute',{method:'POST',body:{workflow:state.currentWorkflow,input_text:$('cmdInput').value.trim(),settings}});if(r.success){state.isListenerRunning=r.mode==='listener';updateStatus();refreshStats();refreshHealth();showWebhookBox(r.webhook_url);const first=(r.results&&r.results[0]);toast((typeof first==='string'?first:first&&first.message)||'✅ جریان فعال شد')}else{const first=(r.results&&r.results[0]);toast('❌ '+((typeof first==='string'?first:first&&first.message)||r.detail||'خطای فعال‌سازی'),'error')}}
+
+async function runOnce(){const wf=ensureWorkflow();const settings=collectSettingsFromDOM();toast('🧪 در حال اجرای تستی...');const r=await api('/execute',{method:'POST',body:{workflow:wf,input_text:$('cmdInput').value.trim(),settings,test_mode:true}});const results=Array.isArray(r.results)?r.results:[];state.lastResults={};results.forEach(res=>{if(res&&res.node_id)state.lastResults[res.node_id]=res});renderWorkflow(wf);$('resultsList').innerHTML=results.length?results.map(res=>`<div class="item"><div class="item-ico" style="background:${res.status==='error'?'rgba(239,68,68,.16)':'rgba(34,197,94,.16)'}">${res.status==='error'?'❌':'✅'}</div><div><h4>${escapeHtml(res.label||res.type)}</h4><p>${escapeHtml(res.message||'')}</p><div class="meta"><span>${res.ms}ms</span></div></div></div>`).join(''):`<div class="empty"><div class="big">🧪</div><p>نتیجه‌ای برنگشت</p></div>`;showModal('resultsModal');toast(r.success?'✅ اجرای تستی موفق بود':'⚠️ اجرای تستی با خطا مواجه شد',r.success?'success':'error')}
+
+// ===== افزودن گره =====
+function openAddNodeModal(afterNodeId,branchLabel){
+  state.addNodeTarget={afterNodeId,branchLabel};
+  const cats={};
+  Object.keys(NODE_CATALOG).forEach(type=>{const c=NODE_CATALOG[type].cat;(cats[c]=cats[c]||[]).push(type)});
+  let html='';
+  ['trigger','action','logic'].forEach(cat=>{
+    if(!cats[cat])return;
+    html+=`<div class="type-cat-title">${CAT_LABELS[cat]}</div><div class="type-grid">`;
+    cats[cat].forEach(type=>{const meta=NODE_CATALOG[type];html+=`<button class="type-btn" onclick="addNodeConfirmed('${type}')"><span class="ico">${meta.icon}</span><b>${escapeHtml(meta.label)}</b></button>`});
+    html+='</div>';
+  });
+  $('addNodeBody').innerHTML=html;
+  showModal('addNodeModal');
+}
+function addNodeConfirmed(type){
+  const wf=ensureWorkflow();
+  const {afterNodeId,branchLabel}=state.addNodeTarget||{};
+  const meta=NODE_CATALOG[type]||{};
+  const data={label:meta.label||type};
+  (meta.fields||[]).forEach(f=>{if(f.default!==undefined)data[f.key]=f.default});
+  const id=nextNodeId(wf);
+  wf.nodes.push({id,type,data,position:{x:40,y:120+wf.nodes.length*80}});
+  let parentId=afterNodeId;
+  if(!parentId){
+    // اگر گره مشخصی انتخاب نشده، به آخرین برگ مسیر اصلی وصل کن
+    const out=graphOut(wf);const hasOut=new Set(Object.keys(out));
+    const leaf=wf.nodes.find(n=>!hasOut.has(n.id)&&n.id!==id);
+    parentId=leaf?leaf.id:findRootId(wf);
+  }
+  if(parentId){
+    const edgeData=branchLabel?{branch:branchLabel}:{};
+    wf.edges.push({source:parentId,target:id,data:edgeData});
+  }
+  hideModal('addNodeModal');
+  renderWorkflow(wf);
+  toast('✅ گره اضافه شد');
+}
+
+// ===== ویرایش/حذف گره =====
+function editNode(id){
+  const wf=state.currentWorkflow;if(!wf)return;
+  const node=(wf.nodes||[]).find(n=>n.id===id);if(!node)return;
+  state.editingNodeId=id;
+  const meta=NODE_CATALOG[node.type]||{};
+  $('editNodeTitle').textContent=`✏️ ویرایش: ${meta.label||node.type}`;
+  let html=`<div class="field"><label>برچسب نمایشی</label><input id="ednf_label" value="${escapeHtml((node.data&&node.data.label)||'')}"/></div>`;
+  (meta.fields||[]).forEach(f=>{
+    const cur=(node.data&&node.data[f.key]!==undefined)?node.data[f.key]:(f.default!==undefined?f.default:'');
+    if(f.type==='select'){
+      html+=`<div class="field"><label>${escapeHtml(f.label)}</label><select id="ednf_${f.key}">${f.options.map(o=>`<option value="${o}" ${o===cur?'selected':''}>${escapeHtml(OPERATOR_LABELS[o]||o)}</option>`).join('')}</select></div>`;
+    } else if(f.type==='textarea'){
+      const val=f.key==='cases_raw'&&node.data&&node.data.cases?node.data.cases.map(c=>`${c.value}=${c.label}`).join('\n'):cur;
+      html+=`<div class="field"><label>${escapeHtml(f.label)}</label><textarea id="ednf_${f.key}">${escapeHtml(val||'')}</textarea></div>`;
+    } else {
+      html+=`<div class="field"><label>${escapeHtml(f.label)}</label><input id="ednf_${f.key}" type="${f.type==='number'?'number':'text'}" value="${escapeHtml(cur)}"/></div>`;
+    }
+  });
+  $('editNodeBody').innerHTML=html;
+  showModal('editNodeModal');
+}
+function saveNodeEdit(){
+  const wf=state.currentWorkflow;const id=state.editingNodeId;if(!wf||!id)return;
+  const node=(wf.nodes||[]).find(n=>n.id===id);if(!node)return;
+  node.data=node.data||{};
+  const labelEl=$('ednf_label');if(labelEl)node.data.label=labelEl.value;
+  const meta=NODE_CATALOG[node.type]||{};
+  (meta.fields||[]).forEach(f=>{
+    const el=$('ednf_'+f.key);if(!el)return;
+    if(f.key==='cases_raw'){
+      const cases=el.value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const [value,label]=l.split('=');return{value:(value||'').trim(),label:(label||value||'').trim()}});
+      node.data.cases=cases;
+    } else {
+      node.data[f.key]=f.type==='number'?Number(el.value||0):el.value;
+    }
+  });
+  hideModal('editNodeModal');
+  renderWorkflow(wf);
+  toast('✅ گره ذخیره شد');
+}
+function deleteNodeFromEditor(){
+  const wf=state.currentWorkflow;const id=state.editingNodeId;if(!wf||!id)return;
+  if(!confirm('این گره حذف شود؟'))return;
+  wf.nodes=(wf.nodes||[]).filter(n=>n.id!==id);
+  wf.edges=(wf.edges||[]).filter(e=>e.source!==id&&e.target!==id);
+  hideModal('editNodeModal');
+  renderWorkflow(wf);
+  toast('🗑 گره حذف شد');
+}
+async function stopSystem(){const r=await api('/stop',{method:'POST'});state.isListenerRunning=false;updateStatus();refreshStats();refreshHealth();toast(r.message||'⏹ متوقف شد')}
+function openSaveModal(){if(!state.currentWorkflow){toast('⚠️ ابتدا جریان بسازید','error');return}$('wfName').value=$('cmdInput').value.trim().slice(0,42)||'جریان جدید';$('wfDesc').value='';showModal('saveModal')}
+function getFlows(){return readLocal(STORE_FLOWS,[])}function setFlows(x){writeLocal(STORE_FLOWS,x)}
+function saveWorkflow(){if(!state.currentWorkflow){toast('⚠️ جریانی برای ذخیره نیست','error');return}const name=$('wfName').value.trim();if(!name){toast('نام جریان را وارد کنید','error');return}const flows=getFlows();flows.unshift({id:Date.now(),name,description:$('wfDesc').value.trim(),workflow:state.currentWorkflow,created_at:new Date().toISOString(),status:'local'});setFlows(flows);hideModal('saveModal');loadSavedWorkflows();toast('✅ جریان روی گوشی ذخیره شد')}
+function loadSavedWorkflows(){const flows=getFlows();$('savedWorkflows').innerHTML=flows.length?flows.map(f=>`<div class="item" onclick="openSavedWorkflow(${f.id})" style="cursor:pointer"><div class="item-ico">🧩</div><div style="flex:1;min-width:0"><h4>${escapeHtml(f.name)}</h4><p>${escapeHtml(f.description||'بدون توضیح')}</p><div class="meta"><span>${fmtTime(f.created_at)}</span><span>ذخیره محلی</span></div><div class="btn-row" style="margin-top:10px"><button class="btn ghost" onclick="event.stopPropagation();openSavedWorkflow(${f.id})">بارگذاری</button><button class="btn danger" onclick="event.stopPropagation();deleteWorkflow(${f.id})">حذف</button></div></div></div>`).join(''):`<div class="empty"><div class="big">💾</div><p>هنوز جریانی روی گوشی ذخیره نشده است</p></div>`}
+function openSavedWorkflow(id){const f=getFlows().find(x=>x.id===id);if(!f)return;state.currentWorkflow=f.workflow;state.lastResults={};showWebhookBox(null);renderWorkflow(f.workflow);$('cmdInput').value=f.workflow?.meta?.source_text||f.name;switchSection('builder');toast('✅ جریان بارگذاری شد')}
+function deleteWorkflow(id){if(!confirm('این جریان از گوشی حذف شود؟'))return;setFlows(getFlows().filter(x=>x.id!==id));loadSavedWorkflows();toast('حذف شد')}
+async function testPlatform(p){const s=collectSettingsFromDOM();if(p==='telegram'){toast('🧪 تست تلگرام...');const r=await api('/api/telegram/test',{method:'POST',body:s});toast(r.message||'نتیجه نامشخص',r.success?'success':'error')}}
+function toggleMic(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('مرورگر از تشخیص صوت پشتیبانی نمی‌کند','error');return}if(location.protocol!=='https:'&&!['localhost','127.0.0.1'].includes(location.hostname)){toast('میکروفون روی HTTPS یا localhost فعال است','error');return}if(state.recording){resetMic();return}let rec=new SR();rec.lang='fa-IR';rec.continuous=false;rec.interimResults=true;let finalText='';rec.onstart=()=>{state.recording=true;$('micBtn').classList.add('recording');$('micBtn').textContent='⏹';toast('🎤 در حال گوش دادن...');state.micTimeout=setTimeout(()=>{try{rec.stop()}catch{}},10000)};rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){let tx=e.results[i][0].transcript;if(e.results[i].isFinal)finalText+=tx;else interim+=tx}$('cmdInput').value=finalText+interim};rec.onerror=e=>{toast('خطای میکروفون: '+e.error,'error');resetMic()};rec.onend=()=>{if(finalText.trim()){$('cmdInput').value=finalText.trim();toast('✅ فرمان صوتی دریافت شد')}resetMic()};state.recognition=rec;try{rec.start()}catch(e){toast(e.message,'error');resetMic()}}
+function resetMic(){state.recording=false;if(state.micTimeout)clearTimeout(state.micTimeout);$('micBtn').classList.remove('recording');$('micBtn').textContent='🎤';if(state.recognition){try{state.recognition.abort()}catch{}state.recognition=null}}
+function copyText(t){navigator.clipboard?.writeText(t);toast('کپی شد')}
+async function init(){loadSettings();loadSavedWorkflows();await Promise.all([refreshStats(),refreshHealth(),refreshNotifications()]);setInterval(()=>{refreshStats();refreshHealth()},7000);setInterval(refreshNotifications,30000);updateStatus()}
+init();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>
