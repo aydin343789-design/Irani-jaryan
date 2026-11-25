@@ -15,15 +15,13 @@ android {
 }
 chaquopy {
     defaultConfig {
-        python {
-            version '3.11'
-            pip {
-                install 'fastapi'
-                install 'uvicorn'
-                install 'aiohttp'
-                install 'pytz'
-                install 'python-dotenv'
-            }
+        version '3.11'
+        pip {
+            install 'fastapi'
+            install 'uvicorn'
+            install 'aiohttp'
+            install 'pytz'
+            install 'python-dotenv'
         }
     }
 }
