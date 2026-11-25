@@ -1,2 +1,29 @@
-plugins { id 'com.android.application' }
-android { namespace 'ir.iranflow.pro'; compileSdk 35; defaultConfig { applicationId 'ir.iranflow.pro'; minSdk 24; targetSdk 28; versionCode 1; versionName '0.1.0' } }
+plugins {
+    id 'com.android.application'
+    id 'com.chaquo.python'
+}
+android {
+    namespace 'ir.iranflow.pro'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'ir.iranflow.pro'
+        minSdk 24
+        targetSdk 28
+        versionCode 2
+        versionName '0.2.0'
+    }
+}
+chaquopy {
+    defaultConfig {
+        python {
+            version '3.11'
+            pip {
+                install 'fastapi'
+                install 'uvicorn'
+                install 'aiohttp'
+                install 'pytz'
+                install 'python-dotenv'
+            }
+        }
+    }
+}
